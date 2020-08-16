@@ -1,23 +1,24 @@
-
-<form action="/action_page.php" class="needs-validation" novalidate>
-  <div class="form-group">
-    <label for="uname">Username:</label>
-    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
-    <div class="valid-feedback">Valid.</div>
-    <div class="invalid-feedback">Please fill out this field.</div>
+<div class="login">
+  <div class="mx-auto">
+    <form action="/action_page.php" class="needs-validation" novalidate>
+      <div class="form-group">
+        <label for="email">E-Mail:</label>
+        <input type="text" class="form-control" id="loginEmail" placeholder="E-Mail" name="email" required>
+        <div class="valid-feedback">Gültig</div>
+        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
+      </div>
+      <div class="form-group">
+        <label for="pwd">Passwort:</label>
+        <input type="password" class="form-control" id="loginPasswort" placeholder="Passwort" name="pswd" required>
+        <div class="valid-feedback">Gültig</div>
+        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
+      </div>
+      <div class="form-group form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" name="remember" > Eingeloggt bleiben?
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
   </div>
-  <div class="form-group">
-    <label for="pwd">Password:</label>
-    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
-    <div class="valid-feedback">Valid.</div>
-    <div class="invalid-feedback">Please fill out this field.</div>
-  </div>
-  <div class="form-group form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" type="checkbox" name="remember" required> I agree on blabla.
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">Check this checkbox to continue.</div>
-    </label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
