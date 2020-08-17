@@ -20,6 +20,19 @@
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>
 
+      <div class="form-group">
+        <label for="pwd">Passwort:</label>
+        <input type="password" class="form-control" id="loginPasswort" placeholder="Passwort" name="pswd" required>
+        <div class="valid-feedback">Gültig</div>
+        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
+      </div>
+      <div class="form-group">
+        <label for="pwd">Passwort wiederholen:</label>
+        <input type="password" class="form-control" id="loginPasswort" placeholder="Passwort" name="pswd" required>
+        <div class="valid-feedback">Gültig</div>
+        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
+      </div>
+
       <label for="tel">Geschlecht:</label>
       <br>
       <div class="form-check form-check-inline">
