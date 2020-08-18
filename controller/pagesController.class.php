@@ -16,5 +16,9 @@ class PagesController extends \Trainingskalender\core\Controller
         
     }
 
+    public function actionKalender(){
+        
+    }
+
 
 }

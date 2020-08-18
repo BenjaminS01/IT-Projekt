@@ -33,5 +33,6 @@
     <?php echo $body; ?>
 
     <footer>
+      <script src="assets/js/script1.js"></script>
     </footer>
 </body>
