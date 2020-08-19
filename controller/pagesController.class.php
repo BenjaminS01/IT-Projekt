@@ -13,7 +13,9 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionRegister(){
-        
+        if(isset($_POST['submitRegister'])){
+            //TODO
+        }
     }
 
     public function actionKalender(){

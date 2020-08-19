@@ -10,7 +10,8 @@
       </div>
       <div class="form-group">
         <label for="pwd">Nachname:</label>
-        <input type="text" class="form-control" id="registerLastname" placeholder="Nachname" name="lastName" required >
+        <input type="text" class="form-control" id="registerLastname" placeholder="Nachname" name="lastName" required 
+        value="<?= isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : '' ?>">
         <div class="valid-feedback">Gültig</div>
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>
@@ -29,8 +30,9 @@
       <br>
 
       <div class="form-group">
-        <label for="tel">Telefonnummer:</label>
-        <input type="text" class="form-control" id="registerPhone" placeholder="Telefonnummer" name="phone" required>
+        <label for="phoneNumber">Telefonnummer:</label>
+        <input type="text" class="form-control" id="registerPhone" placeholder="Telefonnummer" name="phoneNumber" required
+        value="<?= isset($_POST['phoneNumber']) ? htmlspecialchars($_POST['phoneNumber']) : '' ?>">
         <div class="valid-feedback">Gültig</div>
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>
@@ -38,7 +40,8 @@
 
       <div class="form-group">
         <label for="pwd">E-Mail:</label>
-        <input type="text" class="form-control" id="registerEmail" placeholder="E-Mail" name="email" required >
+        <input type="text" class="form-control" id="registerEmail" placeholder="E-Mail" name="email" required 
+        value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
         <div class="valid-feedback">Gültig</div>
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>
@@ -61,7 +64,7 @@
       </div>
 
 
-      <button type="submit" class="btn btn-primary">Registrieren</button>
+      <button type="submit" class="btn btn-primary" name="submitRegister">Registrieren</button>
     </form>
   </div>
 </div>
