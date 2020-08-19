@@ -19,11 +19,13 @@
       <label for="tel">Geschlecht:</label>
       <br>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="W"
+        <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'W' ? "checked" : '') : '' ?>>
         <label class="form-check-label" for="inlineRadio1">W</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="M"
+        <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'M' ? "checked" : '') : '' ?>>
         <label class="form-check-label" for="inlineRadio2">M</label>
       </div>
       <br>
@@ -47,8 +49,8 @@
       </div>
 
       <div class="form-group">
-        <label for="password1">Passwort:</label>
-        <input type="password" class="form-control" id="registerPassword" placeholder="Passwort" name="password1" required
+        <label for="password">Passwort:</label>
+        <input type="password" class="form-control" id="registerPassword" placeholder="Passwort" name="password" required
         onkeyup="validatePassword();">
         <div class="valid-feedback">Gültig</div>
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
@@ -57,8 +59,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="password2">Passwort wiederholen:</label>
-        <input type="password" class="form-control" id="loginPassword" placeholder="Passwort wiederholen" name="password2" required>
+        <label for="passwordCheck">Passwort wiederholen:</label>
+        <input type="password" class="form-control" id="loginPassword" placeholder="Passwort wiederholen" name="passwordCheck" required>
         <div class="valid-feedback">Gültig</div>
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>

@@ -17,13 +17,10 @@
         <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Accountverwaltung</a>
+                    <a href="?a=login" class="nav-link">Accountverwaltung</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Kalender</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Kalender</a>
+                    <a href="?a=kalender" class="nav-link">Kalender</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">

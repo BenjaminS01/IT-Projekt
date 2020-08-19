@@ -13,8 +13,15 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionRegister(){
+
+        $errors = [];
+
         if(isset($_POST['submitRegister'])){
-            //TODO
+
+            if(isValidRegister($errors)){
+                register($errors);
+            }
+           
         }
     }
 

@@ -7,8 +7,6 @@ $controllerName=$_GET['c'] ?? 'pages';
 $actionName=$_GET['a'] ?? 'start';
 
 
-
-
 $controllerPath=__DIR__ . '/controller/' . $controllerName. "Controller" . '.class.php';
 if (file_exists($controllerPath)){
     include_once $controllerPath;
