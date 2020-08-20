@@ -1,10 +1,9 @@
 <?php
-/*
-$dbName='bswarovsky';
-$dns='mysql:dbname='.$dbName.';myadmin.bswarovsky.bplaced.net;';
+$dbName='trainingskalender';
+$dns='mysql:dbname='.$dbName.';host=localhost;';
 
-$userName='bswarovsky';
-$password='omglol123';
+$userName='root';
+$password='';
 $options=[
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
@@ -16,4 +15,3 @@ try{
 }catch (\PDOException $e){
     die('Database connection failed: '. $e->getMessage());
 }
-*/

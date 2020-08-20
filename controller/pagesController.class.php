@@ -13,7 +13,7 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionRegister(){
-
+       
         $errors = [];
 
         if(isset($_POST['submitRegister'])){
@@ -21,8 +21,15 @@ class PagesController extends \Trainingskalender\core\Controller
             if(isValidRegister($errors)){
                 register($errors);
             }
+    
+            if(count($errors) === 0){
+                header('Location: index.php?c=pages&a=start');
+            }
+          
+            $this->_params['error'] = $errors;
            
         }
+
     }
 
     public function actionKalender(){

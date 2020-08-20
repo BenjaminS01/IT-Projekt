@@ -60,7 +60,7 @@
       </div>
       <div class="form-group">
         <label for="passwordCheck">Passwort wiederholen:</label>
-        <input type="password" class="form-control" id="loginPassword" placeholder="Passwort wiederholen" name="passwordCheck" required>
+        <input type="password" class="form-control" id="registerPasswordCheck" placeholder="Passwort wiederholen" name="passwordCheck" required>
         <div class="valid-feedback">Gültig</div>
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>
