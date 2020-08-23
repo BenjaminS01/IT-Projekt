@@ -76,3 +76,154 @@ function isValidRegister(&$errors){
        return false;
    }
 }
+
+/*
+function isPasswordfromUser($password, $email, &$errors, $isEmail=true)
+{
+
+    $dbQuery = skwd\models\Account::find('email= ' . '\'' . $email . '\'');
+
+    if (!empty($dbQuery)) {
+
+        // "Wrong password or email" is for the login form
+        // "Wrong old password" is for personal data password change because there is no field for email
+        if (password_verify($password, $dbQuery[0]['password'])) {
+            return true;
+        } else {
+            if ($isEmail == true) {
+                array_push($errors, "Wrong password or email");
+                return false;
+            } else {
+                array_push($errors, "Wrong old password");
+                return false;
+            }
+        }
+    } else {
+        if ($isEmail == true) {
+            array_push($errors, "Wrong password or email");
+            return false;
+        } else {
+            array_push($errors, "Wrong old password");
+            return false;
+        }
+    }
+
+}
+
+
+//rememberMe shows if the checkbox in login form is set
+function login($password, $email, $rememberMe, &$errors)
+{
+    $isLoginSuccessful = false;
+    $isLoginSuccessful = isPasswordfromUser($password, $email, $errors);
+    //if remember me is set, the user should remain logged in after closing the browser window
+    if ($isLoginSuccessful == true && $rememberMe == true) {
+        $dbQuery = \skwd\models\Account::find('email= ' . '\'' . $email . '\'');
+        $id = $dbQuery[0]['id'];
+        rememberMe($email, $id);
+    }
+
+    return $isLoginSuccessful;
+}
+
+function logout()
+{
+    unset($_SESSION['id']);
+    session_destroy();
+    
+    setcookie('id', '', -1, '/');
+    header('Location: index.php?c=pages&a=start');
+}
+
+function rememberMe($email, $id)
+{
+    // coockie is set for 1 month
+    $duration = time() + 3600 * 24 * 30;
+
+    setcookie('id', $id, $duration, '/');
+}
+
+function getAccountId()
+{
+    if (isset($_SESSION['id'])) {
+        return $_SESSION['id'];
+    } else if (isset($_COOKIE['id'])) {
+        return $_COOKIE['id'];
+    } else return null;
+}
+*/
+
+function login(&$errors){
+
+    $member = Trainingskalender\models\Member::find('email= ' . '\'' . $_POST['email'] . '\'');
+
+    if(memberExists($errors, $member)){
+
+        if(isPasswordfromUser($errors, $member)){
+            setIdForCookieOrSession($member);
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    else{
+        return false;
+    }
+  
+}
+
+
+function isPasswordfromUser(&$errors, $member){
+    
+    if (password_verify($_POST['password'], $member[0]['password'])) {
+        return true;
+    } else {
+       
+        array_push($errors, "Wrong password or email");
+        return false;
+    } 
+
+}
+
+function memberExists(&$errors, $member){
+
+    if(empty($member)){
+        array_push($errors, "Wrong password or email");
+        return false;
+    }
+    else {
+        return true;
+    }
+
+}
+
+function setIdForCookieOrSession($member){
+
+    if(isset($_POST['rememberMe'])){
+        stayLoggedIn($member);
+    }
+    else{
+        $_SESSION['id'] = $member[0]['id'];
+    }
+
+}
+
+function stayLoggedIn($member)
+{
+    // coockie is set for 1 month
+    $duration = time() + 3600 * 24 * 30;
+
+    setcookie('id', $member[0]['id'], $duration, '/');
+}
+
+function logout()
+{
+    unset($_SESSION['id']);
+    session_destroy();
+    
+    setcookie('id', '', -1, '/');
+    header('Location: index.php?c=pages&a=start');
+}
+
