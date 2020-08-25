@@ -53,6 +53,7 @@ function Kalender(Monat, Jahr, KalenderId) {
             } else {
                 // normale Zellen werden mit der Tageszahl befüllt und mit der Klasse Kalendertag markiert
                 cell.innerHTML = Tageszahl;
+                cell.innerHTML += '</br>' + "<a href=''>Training eintragen</a>"
                 cell.className = 'kalendertag'
                     // und der aktuelle Tag (heute) wird noch einmal speziell mit der Klasse "heute" markiert
                 if (Tageszahl == DieserTag) {

@@ -9,7 +9,7 @@
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>
       <div class="form-group">
-        <label for="pwd">Nachname:</label>
+        <label for="password">Nachname:</label>
         <input type="text" class="form-control" id="registerLastname" placeholder="Nachname" name="lastName" required 
         value="<?= isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : '' ?>">
         <div class="valid-feedback">Gültig</div>

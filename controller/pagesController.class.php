@@ -56,6 +56,20 @@ class PagesController extends \Trainingskalender\core\Controller
 
     public function actionKalender(){
         
+        $errors = [];
+        $memberId = getMemberId();
+       
+
+       $this->$_params['trainingEntry'] = \Trainingskalender\models\TrainingEntry::find('memberId= ' . '\'' . $memberId . '\'');
+
+        /*if(...)
+        $nxtm = strtotime("next month");
+        $this->$_params['month'] = date("F", $nxtm);
+        */
+        $this->$_params['month'] = date("F");
+        
+        
+
     }
 
 
