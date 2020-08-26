@@ -290,7 +290,8 @@ function draw_calendar($month,$year,$events){
 			$event_day = $year.'-'.$_month.'-'.$day;
 			if(isset($events[$event_day])) {
 				//foreach($events[$event_day] as $event) {
-					$calendar.= '<div class="event">'.$events[$event_day]['trainingDate'].'</div>';/////////////
+                    $calendar.= '<a href="?a=updateTrainingEntry&param='.$events[$event_day]['trainingDate'].'" >Dein Trainingseintrag</a>';
+					//$calendar.= '<div class="event">'.$events[$event_day]['trainingDate'].'</div>';/////////////
                // }
 			}
 			else {

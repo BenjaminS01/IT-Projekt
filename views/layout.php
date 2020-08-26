@@ -10,7 +10,7 @@
 <body>
 <!-- Nav tabs -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a href="#" class="navbar-brand">Trainingskalender</a>
+        <a href="?a=start" class="navbar-brand">Home</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
