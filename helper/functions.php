@@ -278,6 +278,8 @@ function draw_calendar($month,$year,$events){
 		$calendar.= '<td class="calendar-day"><div style="position:relative;height:100px;">';
 			/* add in the day number */
             $calendar.= '<div class="day-number">'.$list_day.'</div>';
+
+            
             $day = '';
     
 			if($list_day < 10){
@@ -287,10 +289,13 @@ function draw_calendar($month,$year,$events){
                 $day = $list_day;
             }
 
-			$event_day = $year.'-'.$_month.'-'.$day;
+            $event_day = $year.'-'.$_month.'-'.$day;
+            
+            $calendar.= '<a href="?a=chooseTypeOfTraining&trainingDate='.$event_day.'" >test</a>';
+
 			if(isset($events[$event_day])) {
 				//foreach($events[$event_day] as $event) {
-                    $calendar.= '<a href="?a=updateTrainingEntry&param='.$events[$event_day]['trainingDate'].'" >Dein Trainingseintrag</a>';
+                    $calendar.= '<a href="?a=chooseTypeOfTraining&trainingDate='.$events[$event_day]['trainingDate'].'" >Dein Trainingseintrag</a>';
 					//$calendar.= '<div class="event">'.$events[$event_day]['trainingDate'].'</div>';/////////////
                // }
 			}
@@ -339,5 +344,10 @@ function random_number() {
 	srand(time());
 	return (rand() % 7);
 }
+
+
+
+/////////////***********KALENDER EINTRAGEN */////////////
+
 
 

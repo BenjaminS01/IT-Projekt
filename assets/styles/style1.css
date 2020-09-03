@@ -26,6 +26,12 @@
         width: 70%;
         padding-top: 20px;
     }
+    
+    .chooseTypeOfTraining .mx-auto {
+        max-width: 700px;
+        width: 70%;
+        padding-top: 20px;
+    }
     /*******************Kalender (JAVASCRIPT)*****/
     
     table {

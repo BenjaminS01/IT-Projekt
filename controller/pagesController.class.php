@@ -58,6 +58,7 @@ class PagesController extends \Trainingskalender\core\Controller
         
         $errors = [];
         $memberId = getMemberId();
+        $_SESSION['trainingDate'] = null;
        
 
        $this->$_params['trainingEntry'] = \Trainingskalender\models\TrainingEntry::find('memberId= ' . '\'' . $memberId . '\'');
@@ -72,8 +73,40 @@ class PagesController extends \Trainingskalender\core\Controller
 
     }
 
-    public function actionUpdateTrainingEntry(){
-        
+    public function actionChooseTypeOfTraining(){
+
+
+    }
+
+    public function actionChooseTimeAndRoom(){
+
+        if($_GET['typeOfTraining']==='Training'){
+            $this->$_params['Area'] =  \Trainingskalender\models\Area
+        ::find('labelling like \'%'.$_GET['typeOfTraining'] . '%\'');
+
+        $this->$_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling =\''.$this->$_params['Area'][0]['labelling'].'\'');
+        }
+
+        else if($_GET['typeOfTraining']==='Kurs'){
+
+        $date = $_GET['trainingDate'];
+ 
+        //Get the day of the week using PHP's date function.
+        $dayOfWeek = date("N", strtotime($date));
+
+        $this->$_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('weekday =\''.$dayOfWeek.'\'');
+        }
+    }
+
+    public function actionTimesForTraining(){
+
+        $timeChangingRoomBeforeTraining;
+        $timeChangingRoomAfterTraining;
+        $timeCardio;
+        $timeTraining;
+        $memberId = getMemberId();
 
     }
 
