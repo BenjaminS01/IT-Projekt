@@ -8,7 +8,7 @@
      <td><?= $this->$_params['viewAreaTimeslot'][0]['startTime'].'-'.$this->$_params['viewAreaTimeslot'][0]['endTime']?></td>
      </tr>
      <tr><td>Raum: </td>
-     <td><?= $this->$_params['viewAreaTimeslot'][0]['labelling']?></td>
+     <td><?=$_POST['trainingArea']?></td>
      </tr>
 </table>
 
@@ -22,6 +22,6 @@
 
 <table class="thead-dark">
       <td>Raum: </td><td></td>
-      <td>Zeit vor dem Training: </td><td></td>
+      <td>Zeit vor dem Training: </td><td><?= $this->$_params['changingRoomBeforeStartTime'].'-'.$this->$_params['changingRoomBeforeEndTime']?></td>
       <td>Zeit nach dem Training: </td><td></td>
 </table>

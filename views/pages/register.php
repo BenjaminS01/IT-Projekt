@@ -19,13 +19,13 @@
       <label for="tel">Geschlecht:</label>
       <br>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="W"
-        <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'W' ? "checked" : '') : '' ?>>
+        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Damen"
+        <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'Damen' ? "checked" : '') : '' ?>>
         <label class="form-check-label" for="inlineRadio1">W</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="M"
-        <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'M' ? "checked" : '') : '' ?>>
+        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Herren"
+        <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'Herren' ? "checked" : '') : '' ?>>
         <label class="form-check-label" for="inlineRadio2">M</label>
       </div>
       <br>

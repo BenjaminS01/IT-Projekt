@@ -120,15 +120,26 @@ class PagesController extends \Trainingskalender\core\Controller
         $this->$_params['cardioStartTime'] = '';
         $this->$_params['cardioEndTime'] = '';
     
+    
+        $test= setCardioTimes($this->$_params['viewAreaTimeslot'][0], $this->$_params['cardioStartTime'], $this->$_params['cardioEndTime'], $errors );
+
+        if($test===false){
+           //redirect errors.....
+        }
+
         $this->$_params['memberId'] = getMemberId();
 
+        $member = \Trainingskalender\models\Member
+        ::find('id = \''.$this->$_params['memberId'].'\'');
 
+        $this->$_params['changingRoomBeforeStartTime'] = '';
+        $this->$_params['changingRoomBeforeEndTime'] = '';
 
-       $test= setCardioTimes($this->$_params['viewAreaTimeslot'][0], $this->$_params['cardioStartTime'], $this->$_params['cardioEndTime'], $errors );
+        $test = setChangingRoomBeforeTimes($this->$_params['viewAreaTimeslot'][0], $member[0], $this->$_params['changingRoomBeforeStartTime'], $this->$_params['changingRoomBeforeEndTime']);
 
-       if($test===false){
-           //redirect errors.....
-       }
+        if($test===false){
+        //redirect errors.....
+        }
 
     }
 

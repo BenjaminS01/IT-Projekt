@@ -4,10 +4,10 @@
 */
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Trainingsraum1',20);
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Trainingsraum2',20);
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Kursraum1',20);
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Kursraum2',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Kursraum 1',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Kursraum 2',20);
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Cardio',10);
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'UmkleideH1',20);
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'UmkleideH2',20);
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'UmkleideD1',20);
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'UmkleideD2',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Umkleide 1, Herren',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Umkleide 2, Herren',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Umkleide 1, Damen',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (NULL,'Umkleide 2, Damen',20);
