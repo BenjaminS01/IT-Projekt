@@ -348,6 +348,102 @@ function random_number() {
 
 
 /////////////***********KALENDER EINTRAGEN */////////////
+// ' te join Member m on m.id = te.memberId'
+
+function getTrainingEntrysByCardioTime($viewAreaTimeslot, $cardioStartTime, $cardioEndTime){
+   // $join, $where, $orderBy, $groupByAndHaving, $limitAndOffset=null
+   return \Trainingskalender\models\TrainingEntry
+        ::find('trainingDate = \''.$_POST['trainingDate'].'\' and cardioStartTime = \''.$cardioStartTime.'\'and cardioEndTime = \''.$cardioEndTime.'\'');
+}
+
+function setCardioTimes($viewAreaTimeslot, &$cardioStartTime, &$cardioEndTime, &$errors){
+    
+    $area = \Trainingskalender\models\Area
+    ::find('labelling = \'Cardio\'');
 
 
+    getTimeDiffBeforeTraining('00:10:00','00:00:00',$viewAreaTimeslot['startTime'] , $cardioStartTime,  $cardioEndTime );
+    $trainingEntrysByCardioTime = getTrainingEntrysByCardioTime($viewAreaTimeslot, $cardioStartTime, $cardioEndTime);
 
+    if(arePlacesAvailable($area,$viewAreaTimeslot, $cardioStartTime, $cardioEndTime, $trainingEntrysByCardioTime)){
+        return true;
+    }
+    else{
+ 
+      getTimeDiffBeforeTraining('00:20:00','00:10:00',$viewAreaTimeslot['startTime'] , $cardioStartTime,  $cardioEndTime );
+      $trainingEntrysByCardioTime = getTrainingEntrysByCardioTime($viewAreaTimeslot, $cardioStartTime, $cardioEndTime);
+    }
+
+    if(arePlacesAvailable($area,$viewAreaTimeslot, $cardioStartTime, $cardioEndTime, $trainingEntrysByCardioTime)){
+        return true;
+    }
+    else{
+        array_push($errors, "Kein Zeitslot für Kardiogeräte verfügbar");
+        return false;
+    }
+    
+   // return $cardioStartTime->format('%H:%I:%S');
+}
+
+function getTrainingEntrysByChangingRoomTimeBefore($viewAreaTimeslot, $cardioStartTime, $cardioEndTime){
+
+}
+
+function getTrainingEntrysByChangingRoomTimeAfter($viewAreaTimeslot, $cardioStartTime, $cardioEndTime){
+
+}
+
+function getTimeDiffBeforeTraining($timediffStartTimeAndTrainingStart,$timediffEndTimeAndTrainingStart,$trainingStartTime, &$startTime, &$endTime ){
+    $trainingStartTime = new DateTime($trainingStartTime);
+    $timediffStartTimeAndTrainingStart   = new DateTime($timediffStartTimeAndTrainingStart);
+    $startTime   = $timediffStartTimeAndTrainingStart->diff($trainingStartTime);
+
+    $timediffEndTimeAndTrainingStart   = new DateTime($timediffEndTimeAndTrainingStart);
+    $endTime   = $timediffEndTimeAndTrainingStart->diff($trainingStartTime);
+
+    $cardioEndTime = $viewAreaTimeslot['startTime'];
+   
+
+    $startTime = $startTime->format('%H:%I:%S');
+    $endTime = $endTime->format('%H:%I:%S');
+}
+
+function setChangingRoomBeforeTimes($viewAreaTimeslot, $member, $changingRoomStartTime, $changingRoomEndTime){
+
+    $member = \Trainingskalender\models\Member
+    ::find('id = \''.$this->$_params['memberId'].'\'');
+   
+
+    if(strpos($viewAreaTimeslot, '1'.$member['gender']) !== false && $_POST['typeOfTraining']==='Training'){
+        $area = \Trainingskalender\models\Area
+        ::find('labelling = \'Umkleide1'.$member['gender'].'\'');
+
+        getTimeDiffBeforeTraining('00:25:00','00:20:00',$viewAreaTimeslot['startTime'] , $changingRoomStartTime,  $changingRoomEndTime );
+
+        getTrainingEntrysBychangingRoom($viewAreaTimeslot, $changingRoomArea, $changingRoomStartTime, $changingRoomEndTime);
+
+        if(arePlacesAvailable($area,$viewAreaTimeslot, $cardioStartTime, $cardioEndTime)){
+            return true;
+        }
+
+    }
+return false;
+
+}
+
+function arePlacesAvailable($area,$viewAreaTimeslot, $startTime, $endTime, $trainingEntrys){
+
+    if(count($trainingEntrysByCardioTime) <= $area['maxNumberOfPeople']){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+function getTrainingEntrysBychangingRoom($viewAreaTimeslot, $changingRoomArea, $changingRoomBeforeStartTime, $changingRoomBeforeEndTime){
+    // $join, $where, $orderBy, $groupByAndHaving, $limitAndOffset=null
+    return \Trainingskalender\models\TrainingEntry
+         ::find('trainingDate = \''.$_POST['trainingDate'].'\' and 	changingRoomBeforeStartTime = \''.$changingRoomBeforeStartTime.'\' and changingRoomBeforeEndTime = \''.$changingRoomBeforeEndTime.'\' and changingRoom = \''.$changingRoomArea.'\'');
+ }

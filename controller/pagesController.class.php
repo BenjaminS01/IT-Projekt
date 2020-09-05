@@ -98,17 +98,41 @@ class PagesController extends \Trainingskalender\core\Controller
         $this->$_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
         ::find('weekday =\''.$dayOfWeek.'\'');
         }
+/*
+        if(isset($_POST['submitChooseTimeAndRoom'])){
+
+                header('Location: index.php?c=pages&a=confirmTrainingTimes'); 
+
+        }
+        */
     }
 
-    public function actionTimesForTraining(){
+    public function actionConfirmTrainingTimes(){
 
+        $errors = [];
+
+        $this->$_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('id =\''.$_POST['trainingTime'].'\'');
+
+        
         $timeChangingRoomBeforeTraining;
         $timeChangingRoomAfterTraining;
-        $timeCardio;
-        $timeTraining;
-        $memberId = getMemberId();
+        $this->$_params['cardioStartTime'] = '';
+        $this->$_params['cardioEndTime'] = '';
+    
+        $this->$_params['memberId'] = getMemberId();
+
+
+
+       $test= setCardioTimes($this->$_params['viewAreaTimeslot'][0], $this->$_params['cardioStartTime'], $this->$_params['cardioEndTime'], $errors );
+
+       if($test===false){
+           //redirect errors.....
+       }
 
     }
+
+    
 
 
 }

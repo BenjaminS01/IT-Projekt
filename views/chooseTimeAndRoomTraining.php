@@ -1,6 +1,6 @@
 <select name="trainingTime" id="trainingTime1" >
 <?php foreach ($this->$_params['viewAreaTimeslot'] as $value) :?>
-                            <option value="<?= $value['startTime'].'-'.$value['endTime']?>" <?= isset($_GET['trainingTime']) ? ($_GET['trainingTime'] === $value ? "selected" : '') : '' ?>><?= $value['startTime'].'-'.$value['endTime'] ?></option>;
+                            <option value="<?= $value['id']?>" <?= isset($_GET['trainingTime']) ? ($_GET['trainingTime'] === $value ? "selected" : '') : '' ?>><?= substr ($value['startTime'],0,5).'-'.substr ($value['endTime'],0,5).' Uhr' ?></option>;
                         <?php endforeach; ?>
 </select>
 <select name="trainingArea" id="trainingArea1" >

@@ -1,6 +1,4 @@
-<h2><?=$this->$_params['month']?></h2>
-<h2><?=$this->$_params['trainingEntry'][0]['trainingDate']?></h2>
-<h2><?=$this->$_params['trainingEntry'][0]['TrainingTime']?></h2>
+
 
 <?php
 /* draws a calendar */
