@@ -2,7 +2,6 @@
 namespace Trainingskalender\core;
 
 class Controller{
-
     private $controllerName;
     private $actionName;
     protected $_params = [];
