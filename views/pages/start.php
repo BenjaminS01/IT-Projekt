@@ -1,3 +1,5 @@
+
+
 <h1>Willkommen zur Trainingsverwaltung</h1>
 
 
@@ -19,14 +21,12 @@
 </colgroup>
   <tr>
     <th class="tg-4byr"></th>
-    <th class="tg-4byr">Montag</th>
-    <th class="tg-4byr">Dienstag</th>
-    <th class="tg-4byr">Mittwoch</th>
-    <th class="tg-4byr">Donnerstag</th>
-    <th class="tg-4byr">Freitag</th>
-    <th class="tg-4byr">Samstag</th>
-    <th class="tg-4byr">Sonntag</th>
+  <?php foreach ($this->_params['weekdays'] as $value): ?>
+    <?= '<th class="tg-4byr">'.$value.'</th>';?>
+
+  <?php endforeach; ?>
   </tr>
+ 
   <tr>
     <td class="tg-4byr">09:30 - 10:15 Uhr<br></td>
     <td class="tg-efv9"><br><br></td>
@@ -37,6 +37,7 @@
     <td class="tg-efv9"></td>
     <td class="tg-q82y"></td>
   </tr>
+  
   <tr>
     <td class="tg-4byr">10:30 - 11:15 Uhr<br></td>
     <td class="tg-u666">Kurs <br><br>Trainingsrraum 1<br></td>
@@ -138,3 +139,4 @@
     <td class="tg-efv9"></td>
   </tr>
 </table>
+

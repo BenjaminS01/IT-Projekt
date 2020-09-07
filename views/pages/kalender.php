@@ -46,8 +46,8 @@ $events = array();
 $query = &quot;SELECT title, DATE_FORMAT(event_date,'%Y-%m-%D') AS event_date FROM events WHERE event_date LIKE '$year-$month%'&quot;;
 $result = mysql_query($query,$db_link) or die('cannot get results!');*/
 //while($row = mysql_fetch_assoc($result)) {
-	foreach ($this->$_params['trainingEntry'] as $key => $value){
-	$events[$this->$_params['trainingEntry'][$key]['trainingDate']] = $this->$_params['trainingEntry'][$key];
+	foreach ($this->_params['trainingEntry'] as $key => $value){
+	$events[$this->_params['trainingEntry'][$key]['trainingDate']] = $this->_params['trainingEntry'][$key];
 }
 
 echo '<h2 style="float:left; padding-right:30px;">'.date('F',mktime(0,0,0,$month,1,$year)).' '.$year.'</h2>';

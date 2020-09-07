@@ -15,17 +15,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarMenu">
-            <ul class="navbar-nav">
+            
             
             <?php
                 if (!isset($_SESSION['id']) && !isset($_COOKIE['id'])) {
                     include 'views/loginNavbar.php';
                 }
             ?>
-                <li class="nav-item">
-                    <a href="?a=kalender" class="nav-link">Kalender</a>
-                </li>
-            </ul>
+        
+            
             <?php
                 if (isset($_SESSION['id']) || isset($_COOKIE['id'])) {
                     include 'views/logoutNavbar.php';

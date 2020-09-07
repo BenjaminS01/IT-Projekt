@@ -274,11 +274,12 @@ function draw_calendar($month,$year,$events){
     }
 
 	/* keep going with days.... */
-	for($list_day = 1; $list_day <= $days_in_month; $list_day++):
-		$calendar.= '<td class="calendar-day"><div style="position:relative;height:100px;">';
+    for($list_day = 1; $list_day <= $days_in_month; $list_day++):
+        
+		$calendar.= '<td class="calendar-day"><div style="position:relative;height:100px;width:200px;">';
 			/* add in the day number */
+            
             $calendar.= '<div class="day-number">'.$list_day.'</div>';
-
             
             $day = '';
     
@@ -292,6 +293,7 @@ function draw_calendar($month,$year,$events){
             $event_day = $year.'-'.$_month.'-'.$day;
             
             $calendar.= '<a href="?a=chooseTypeOfTraining&trainingDate='.$event_day.'" >test</a>';
+            
 
 			if(isset($events[$event_day])) {
 				//foreach($events[$event_day] as $event) {
@@ -306,6 +308,7 @@ function draw_calendar($month,$year,$events){
            // $calendar.= $day;
            // $calendar.= $event_day; 
            // $calendar.= $events['2020-08-28']['trainingDate'];
+      
 		$calendar.= '</div></td>';
 		if($running_day == 6):
 			$calendar.= '</tr>';
@@ -352,11 +355,12 @@ function random_number() {
 
 function getTrainingEntrysByCardioTime($viewAreaTimeslot, $cardioStartTime, $cardioEndTime){
    // $join, $where, $orderBy, $groupByAndHaving, $limitAndOffset=null
-   return \Trainingskalender\models\TrainingEntry
-        ::find('trainingDate = \''.$_POST['trainingDate'].'\' and cardioStartTime = \''.$cardioStartTime.'\'and cardioEndTime = \''.$cardioEndTime.'\'');
+   $trainings = \Trainingskalender\models\TrainingEntry
+        ::find('trainingDate = \''.$_POST['trainingDate'].'\' and cardioStartTime = \''.$cardioStartTime.'\' and cardioEndTime = \''.$cardioEndTime.'\'');
+   return $trainings;
 }
 
-function setCardioTimes($viewAreaTimeslot, &$cardioStartTime, &$cardioEndTime, &$errors){
+function setCardioTimes($viewAreaTimeslot, &$cardioStartTime, &$cardioEndTime, &$errors, &$test){
     
     $area = \Trainingskalender\models\Area
     ::find('labelling = \'Cardio\'');
@@ -368,12 +372,14 @@ function setCardioTimes($viewAreaTimeslot, &$cardioStartTime, &$cardioEndTime, &
         getTimeDiffBeforeTraining($value,durationCardio,$viewAreaTimeslot['startTime'] , $cardioStartTime,  $cardioEndTime );
         $trainingEntrysByCardioTime = getTrainingEntrysByCardioTime($viewAreaTimeslot, $cardioStartTime, $cardioEndTime);
     
-        if(arePlacesAvailable($area,$viewAreaTimeslot, $cardioStartTime, $cardioEndTime, $trainingEntrysByCardioTime)){
+        if(arePlacesAvailable($area[0]['maxNumberOfPeople'],$viewAreaTimeslot, $cardioStartTime, $cardioEndTime, $trainingEntrysByCardioTime, $test)){
             return true;
         }
 
     }
 
+    array_push($errors, "Keine Kardiozeit verfügbar");
+    
     return false;
 
 /*
@@ -421,11 +427,11 @@ function getTimeDiffBeforeTraining($timediffStartTimeAndTrainingStart,$duration,
     $endTime = $endTime->format('H:i:s');
 }
 
-function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomStartTime, &$changingRoomEndTime, &$changingRoom){
+function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomStartTime, &$changingRoomEndTime, &$changingRoom, &$errors){
     $freePlaces= false;
     $diffTrainingStartChangingBeforeTraining = unserialize (diffTrainingStartChangingBeforeTraining);
  
-    if(strpos($viewAreaTimeslot['labelling'], '1') !== false && $_POST['typeOfTraining']==='Training'){
+    if(strpos($viewAreaTimeslot['labelling'], '1') !== false ){
         $changingRoom = \Trainingskalender\models\Area
         ::find('labelling = \'Umkleide 1, '.$member['gender'].'\'');
         
@@ -443,10 +449,11 @@ function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomSta
         if($freePlaces){
             return true;
         }
-
+        array_push($errors, "Kein Umkleideplatz verfügbar");
+        
         return false;
     }
-    elseif(strpos($viewAreaTimeslot['labelling'], '2') !== false && $_POST['typeOfTraining']==='Training'){
+    elseif(strpos($viewAreaTimeslot['labelling'], '2') !== false ){
         
         $changingRoom = \Trainingskalender\models\Area
         ::find('labelling = \'Umkleide 2, '.$member['gender'].'\'');
@@ -465,20 +472,21 @@ function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomSta
         if($freePlaces){
             return true;
         }
-
+        array_push($errors, "Kein Umkleideplatz verfügbar");
         return false;
 
     }
     else{
-        return $viewAreaTimeslot['labelling'];
+        array_push($errors, "Kein Trainingsplatz verfügbar");
         return false;
     }
     
 }
 
-function arePlacesAvailable($area,$viewAreaTimeslot, $startTime, $endTime, $trainingEntrys){
+function arePlacesAvailable($area,$viewAreaTimeslot, $startTime, $endTime, $trainingEntrys, &$test){
     
-        if(count($trainingEntrys) <= $area){
+    $test = $endTime;
+        if(count($trainingEntrys) < $area){
             return true;
         }
         else{
@@ -512,48 +520,40 @@ function setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraini
     }
  }
 
- function setChangingRoomAfterTimes($viewAreaTimeslot,$member, &$changingRoomStartTime, &$changingRoomEndTime, &$changingRoom){
+ function setChangingRoomAfterTimes($viewAreaTimeslot,$member, &$changingRoomStartTime, &$changingRoomEndTime, $changingRoom, &$errors){
 
-    $diffTrainingStartChangingBeforeTraining = unserialize (diffTrainingStartChangingBeforeTraining);
-  
-    if(strpos($viewAreaTimeslot['labelling'], '1') !== false && $_POST['typeOfTraining']==='Training'){
-        $changingRoom = \Trainingskalender\models\Area
-        ::find('labelling = \'Umkleide 1, '.$member['gender'].'\'');
+    $freePlaces= false;
+    $diffTrainingStartChangingBeforeTraining = unserialize (diffTrainingStartChangingAfterTraining);
+ 
+    if($changingRoom[0]['labelling']==='Umkleide 1, '.$member['gender'] ){
         
-       return setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
+        $freePlaces = setTimesChangingRoomAfterByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
 
-        $changingRoom = \Trainingskalender\models\Area
-        ::find('labelling = \'Umkleide 2, '.$member['gender'].'\'');
-
-      return  setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
-
-        return false;
+        return $freePlaces;
     }
-    elseif(strpos($viewAreaTimeslot['labelling'], '2, '.$member['gender']) !== false && $_POST['typeOfTraining']==='Training'){
+    elseif($changingRoom[0]['labelling']==='Umkleide 2, '.$member['gender'] ){
+             
+        $freePlaces = setTimesChangingRoomAfterByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
 
-        $changingRoom = \Trainingskalender\models\Area
-        ::find('labelling = \'Umkleide 2, '.$member['gender'].'\'');
-        
-        setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
-
-        $changingRoom = \Trainingskalender\models\Area
-        ::find('labelling = \'Umkleide 1, '.$member['gender'].'\'');
-        
-        setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
-
-        return false;
+        if($freePlaces){
+            return true;
+        }
+        array_push($errors, "Kein Umkleideplatz verfügbar"); 
+        return $freePlaces;
 
     }
     else{
+        array_push($errors, "Kein Umkleideplatz verfügbar");
         return false;
     }
     
 }
 
+
 function setTimesChangingRoomAfterByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $area, &$changingRoomStartTime, &$changingRoomEndTime){
     foreach ($diffTrainingStartChangingBeforeTraining as $value){
 
-        getTimeDiffBeforeTraining($value,durationChangingBefore,$viewAreaTimeslot['startTime'] , $changingRoomStartTime,  $changingRoomEndTime );
+        getTimeDiffAfterTraining($value,durationChangingBefore,$viewAreaTimeslot['endTime'] , $changingRoomStartTime,  $changingRoomEndTime );
         
         $trainingEntrysBychangingRoom = getTrainingEntrysBychangingRoom($viewAreaTimeslot, $area['labelling'], $changingRoomStartTime, $changingRoomEndTime);
         
@@ -565,11 +565,11 @@ function setTimesChangingRoomAfterByArea($diffTrainingStartChangingBeforeTrainin
             return true;
         }
     }
- }
+}
 
- function getTimeDiffAfterTraining($timediffStartTimeAndTrainingStart,$duration,$trainingStartTime, &$startTime, &$endTime ){
-    $startTime = new DateTime($trainingStartTime);
-    $startTime->sub(new DateInterval('PT' . $timediffStartTimeAndTrainingStart . 'M'));
+ function getTimeDiffAfterTraining($timediffStartTimeAndTrainingStart,$duration,$trainingEndTime, &$startTime, &$endTime ){
+    $startTime = new DateTime($trainingEndTime);
+    $startTime->add(new DateInterval('PT' . $timediffStartTimeAndTrainingStart . 'M'));
     
 
     $endTime = new DateTime($startTime->format('H:i:s'));
@@ -578,4 +578,50 @@ function setTimesChangingRoomAfterByArea($diffTrainingStartChangingBeforeTrainin
 
     $startTime = $startTime->format('H:i:s');
     $endTime = $endTime->format('H:i:s');
+}
+
+function trainingEntry( &$errors){
+   
+    $trainingEntry = [
+        'trainingDate' => $_POST['trainingDate'],
+        'typeOfTraining' => $_POST['typeOfTraining'],
+        'changingRoom' => $_POST['changingRoom'],
+        'changingRoomBeforeStartTime' => $_POST['changingRoomBeforeStartTime'],
+        'changingRoomBeforeEndTime' => $_POST['changingRoomBeforeEndTime'],
+        'changingRoomAfterStartTime' => $_POST['changingRoomAfterStartTime'],
+        'changingRoomAfterEndTime' => $_POST['changingRoomAfterEndTime'],
+        'cardioStartTime' => $_POST['cardioStartTime'],
+        'cardioEndTime' => $_POST['cardioEndTime'],
+        'memberId' => $_POST['memberId'],
+        'areaTimeslotId' => $_POST['areaTimeslotId']
+        ];
+
+    
+/*
+    $trainingEntry = [
+        'trainingDate' => '2000-12-12',
+        'typeOfTraining' => 'Kurs',
+        'changingRoom' => 'dasdsad',
+        'changingRoomBeforeStartTime' => '00:00:00',
+        'changingRoomBeforeEndTime' => '00:00:00',
+        'changingRoomAfterStartTime' => '00:00:00',
+        'changingRoomAfterEndTime' => '00:00:00',
+        'cardioStartTime' => '00:00:00',
+        'cardioEndTime' => '00:00:00',
+        'memberId' => 1
+        ];
+*/
+        $trainingEntry = new \Trainingskalender\models\TrainingEntry($trainingEntry);
+    
+        $trainingEntry->save($errors);
+
+        
+}
+
+function subOneMonth(){
+
+    $date = new DateTime('now');
+    $date->modify('-1 month');
+
+    return $date->format('Y-m-d');
 }

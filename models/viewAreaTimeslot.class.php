@@ -8,5 +8,6 @@ class ViewAreaTimeslot extends BaseModel {
     'startTime'=>['type'=>BaseModel::TYPE_STRING, 'min'=>2, 'max'=>50],
     'endTime'=>['type'=>BaseModel::TYPE_STRING, 'min'=>2, 'max'=>50],
     'weekday'=>['type'=>BaseModel::TYPE_STRING, 'min'=>1, 'max'=>50],
+    'course'=>['type'=>BaseModel::TYPE_STRING, 'min'=>1, 'max'=>50]
     ];
 }
