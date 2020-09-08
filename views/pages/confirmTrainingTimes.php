@@ -1,32 +1,39 @@
+<div class="container">
+<br>
+<h3>Für Ihr Training am <?= $_POST['trainingDate']?> haben wir folgende Trainingsplanung erstellt</h3>
+<br>
 
-<h3>Training</h3>
-
-<table class="thead-dark">
-     <tr> <td>Trainingsdatum: </td><td><?= $_POST['trainingDate']?></td></tr>
-     <tr> <td>Trainingsbezeichnung: </td><td><?= $this->_params['viewAreaTimeslot'][0]['course']?></td></tr>
-     <tr><td>Trainingszeit:</td>
-     <td><?= $this->_params['viewAreaTimeslot'][0]['startTime'].'-'.$this->_params['viewAreaTimeslot'][0]['endTime']?></td>
-     </tr>
-     <tr><td>Raum: </td>
-     <td><?=$this->_params['trainingArea']?></td>
-     </tr>
-</table>
-
-<h3>Cardio  <?=var_dump($this->_params['test'])?></h3>
-
-<table class="thead-dark">
-      <td>Zeit: </td><td><?= $this->_params['cardioStartTime'].'-'.$this->_params['cardioEndTime']?></td>
-</table>
-
-<h3>Umkleide</h3>
-
-<table class="thead-dark">
-      <td>Raum: </td><td><?= $this->_params['changingRoom'][0]['labelling']?></td>
-      <td>Zeit vor dem Training: </td><td><?= $this->_params['changingRoomBeforeStartTime'].'-'.$this->_params['changingRoomBeforeEndTime']?></td>
-      <td>Zeit nach dem Training: </td><td><?= $this->_params['changingRoomAfterStartTime'].'-'.$this->_params['changingRoomAfterEndTime']?></td>
-
-
-</table>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Zeitslot</th>
+        <th>Bereich</th>
+        <th>Zeitraum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Umkleide vor dem Training</td>
+        <td><?= $this->_params['changingRoom'][0]['labelling']?></td>
+        <td><?= $this->_params['changingRoomBeforeStartTime'].'-'.$this->_params['changingRoomBeforeEndTime']?></td>
+      </tr>
+      <tr>
+        <td>Erwärmung</td>
+        <td>Cardiogeräte</td>
+        <td><?= $this->_params['cardioStartTime'].'-'.$this->_params['cardioEndTime']?></td>
+      </tr>
+      <tr>
+        <td><?=$this->_params['viewAreaTimeslot'][0]['course']?></td>
+        <td><?=$this->_params['trainingArea']?></td>
+        <td><?= $this->_params['viewAreaTimeslot'][0]['startTime'].'-'.$this->_params['viewAreaTimeslot'][0]['endTime']?></td>
+      </tr>
+      <tr>
+        <td>Umkleide nach dem Training</td>
+        <td><?= $this->_params['changingRoom'][0]['labelling']?></td>
+        <td><?= $this->_params['changingRoomAfterStartTime'].'-'.$this->_params['changingRoomAfterEndTime']?></td>
+      </tr>
+    </tbody>
+  </table>  
 
 <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=start'; ?>">
 <input type="hidden" id="trainingDate2" name="trainingDate" value="<?= $_POST['trainingDate']?>">
@@ -42,5 +49,6 @@
       <input type="hidden" id="trainingType2" name="memberId" value="<?= $this->_params['memberId']?>">
       <input type="hidden" id="trainingType2" name="areaTimeslotId" value="<?= $this->_params['viewAreaTimeslot'][0]['id']?>">   
 
-  <button type="submit" name="submitTrainingEntry" >Eintrag bestätigen</button>
+  <button type="submit" name="submitTrainingEntry" class="btn btn-primary" >Eintrag bestätigen</button>
 </form>
+</div>

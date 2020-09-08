@@ -562,7 +562,7 @@ function setTimesChangingRoomAfterByArea($diffTrainingStartChangingBeforeTrainin
         }
     }
     return false;
-
+    array_push($errors, "Kein Umkleideplatz verfügbar");
 }
 
  function getTimeDiffAfterTraining($timediffStartTimeAndTrainingStart,$duration,$trainingEndTime, &$startTime, &$endTime ){
@@ -595,20 +595,6 @@ function trainingEntry( &$errors){
         ];
 
     
-/*
-    $trainingEntry = [
-        'trainingDate' => '2000-12-12',
-        'typeOfTraining' => 'Kurs',
-        'changingRoom' => 'dasdsad',
-        'changingRoomBeforeStartTime' => '00:00:00',
-        'changingRoomBeforeEndTime' => '00:00:00',
-        'changingRoomAfterStartTime' => '00:00:00',
-        'changingRoomAfterEndTime' => '00:00:00',
-        'cardioStartTime' => '00:00:00',
-        'cardioEndTime' => '00:00:00',
-        'memberId' => 1
-        ];
-*/
         $trainingEntry = new \Trainingskalender\models\TrainingEntry($trainingEntry);
     
         $trainingEntry->save($errors);

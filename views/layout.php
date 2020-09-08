@@ -38,7 +38,7 @@
         if (isset($this->_params['error'])) {
 
             foreach ($this->_params['error'] as $value) {
-                echo nl2br($value . "\r\n");
+                echo nl2br('<div class="alert alert-danger" role="alert">'. $value.'</div>' . "\r\n");
             }
             
         }
@@ -52,6 +52,8 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+       
     <?php echo $body; ?>
 
     <footer>

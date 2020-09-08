@@ -1,12 +1,5 @@
 
 
- <?php
-        if (isset($_GET['f'])) {
-          
-            echo $_GET['f'];
-            
-        }
-    ?>
 
 
 <div class="chooseTimeAndRoom">
