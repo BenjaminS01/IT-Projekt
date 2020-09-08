@@ -1,5 +1,14 @@
 
 
+ <?php
+        if (isset($_GET['f'])) {
+          
+            echo $_GET['f'];
+            
+        }
+    ?>
+
+
 <div class="chooseTimeAndRoom">
   <div class="mx-auto">
     <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=confirmTrainingTimes'; ?>"  class="needs-validation" novalidate>

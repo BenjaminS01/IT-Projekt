@@ -88,7 +88,11 @@ class PagesController extends \Trainingskalender\core\Controller
 
     public function actionChooseTypeOfTraining(){
 
-
+        $this->_params['date'] = getTrainingDateClass();
+       
+    
+ 
+  
     }
 
     public function actionChooseTimeAndRoom(){
@@ -141,7 +145,7 @@ class PagesController extends \Trainingskalender\core\Controller
         $this->_params['test'] = null;
     
     
-        $test = setCardioTimes($this->_params['viewAreaTimeslot'][0], $this->_params['cardioStartTime'], $this->_params['cardioEndTime'], $errors, $this->_params['test'] );
+        $test = setCardioTimes($this->_params['viewAreaTimeslot'][0], $this->_params['cardioStartTime'], $this->_params['cardioEndTime'], $errors );
 
         if($test===false){
             header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f='.$errors);
@@ -158,16 +162,16 @@ class PagesController extends \Trainingskalender\core\Controller
         $this->_params['changingRoomAfterEndTime'] = '';
         $this->_params['changingRoom'] = null;
 
-        $test = setChangingRoomBeforeTimes($this->_params['viewAreaTimeslot'][0], $member[0], $this->_params['changingRoomBeforeStartTime'], $this->_params['changingRoomBeforeEndTime'],  $this->_params['changingRoom'], $errors );
+        $test = setChangingRoomBeforeTimes($this->_params['viewAreaTimeslot'][0], $member[0], $this->_params['changingRoomBeforeStartTime'], $this->_params['changingRoomBeforeEndTime'],  $this->_params['changingRoom'], $errors , $this->_params['test']);
 
         if($test===false){
-            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f='.$errors);
+            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f='.$errors[0]);
         }
 
         $test = setChangingRoomAfterTimes($this->_params['viewAreaTimeslot'][0], $member[0], $this->_params['changingRoomAfterStartTime'], $this->_params['changingRoomAfterEndTime'],  $this->_params['changingRoom'], $errors );
 
         if($test===false){
-            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f='.$errors);
+            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f='.$errors[0]);
         }
 
         $this->_params['trainingDate'] = $_POST['trainingDate'];
