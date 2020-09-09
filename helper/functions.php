@@ -597,6 +597,7 @@ function trainingEntry( &$errors){
     
         $trainingEntry = new \Trainingskalender\models\TrainingEntry($trainingEntry);
     
+
         $trainingEntry->save($errors);
 
         

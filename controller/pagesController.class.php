@@ -8,6 +8,17 @@ class PagesController extends \Trainingskalender\core\Controller
 
     public function actionStart(){
 
+        $this->_params['Montag'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'1\' order by startTime ASC');
+        $this->_params['Dienstag'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'2\' order by startTime ASC');
+        $this->_params['Mittwoch'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'3\' order by startTime ASC');
+        $this->_params['Donnerstag'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'4\' order by startTime ASC');
+        $this->_params['Freitag'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'5\' order by startTime ASC');
+
         $times = [];
         $this->_params['weekdays'] = array('Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag');
 
@@ -71,20 +82,33 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionKalender(){
-        
+        $db = $GLOBALS['db'];
         $errors = [];
         $memberId = getMemberId();
         $_SESSION['trainingDate'] = null;
        
-
-       $this->_params['trainingEntry'] = \Trainingskalender\models\TrainingEntry::find('memberId= ' . '\'' . $memberId . '\'');
-
+        $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
+        and month(curdate()) = month(TrainingDate)');
+        $query1->execute();
+        $this->_params['trainingEntry'] = $query1->fetchall();
+/*
+       $this->_params['trainingEntry'] = \Trainingskalender\models\TrainingEntry::find('memberId= ' . '\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
+       and month(curdate()) = month(TrainingDate)');
+*/
         /*if(...)
         $nxtm = strtotime("next month");
         $this->$_params['month'] = date("F", $nxtm);
         */
         $this->_params['month'] = date("F");
+       
         
+
+
+
+        /////test
+        	foreach ($this->_params['trainingEntry'] as $key => $value){
+                $this->_params['events'][$this->_params['trainingEntry'][$key]['trainingDate']] = $this->_params['trainingEntry'][$key];
+            }
         
 
     }

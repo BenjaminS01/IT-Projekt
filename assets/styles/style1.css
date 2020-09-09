@@ -33,7 +33,7 @@
         padding-top: 20px;
     }
     /*******************Kalender (JAVASCRIPT)*****/
-    /* 
+    
     table {
         width: 800px;
     }
@@ -43,15 +43,16 @@
     caption {
         border: 1px solid black;
         border-collapse: collapse;
-        padding: 0.4em;
+        padding: 1em;
         text-align: center;
     }
-    
+    /* 
     td:nth-of-type(6),
     td:nth-of-type(7) {
         background: #ebf5d7;
         color: #666;
     }
+    */
     
     caption,
     tr:first-of-type {
@@ -63,12 +64,16 @@
     td.heute {
         color: red;
         font-weight: bold;
-        background: #ffebe6;
+        background: #abdcf8;
     }
-    /*
+    
+    td.alt {
+        font-weight: bold;
+        background: #d1d1d1;
+    }
     /**********Kalender end **********/
     /**********php Kalender******/
-    
+    /*  
     .tg {
         border-collapse: collapse;
         border-spacing: 0;
@@ -123,6 +128,7 @@
         background-color: #9aff99;
         color: #333333
     }
+    */
     /*************/
     /**********ajax load more ************/
     
@@ -130,8 +136,9 @@
         background-color: #F1F1F1;
         -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
         box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-        margin: 30px 15px 2px;
-        padding: 2px;
+        margin: 50px 15px 2px;
+        margin-bottom: 50px;
+        padding: 60px;
         font-size: 18px;
         line-height: 1.5;
     }

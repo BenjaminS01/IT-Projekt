@@ -1,57 +1,95 @@
+<h1>Monatskalender</h1>
+<main>
+	<table id="kalender"> </table>
+</main>
+<script>const d = new Date();
+const dm = d.getMonth() + 1;
+const dj = d.getYear() + 1900;
+Kalender(dm, dj, 'kalender');
 
+function Kalender(Monat, Jahr, KalenderId) {
+    const Monatsname = new Array("Januar", "Februar", "März", "April", "Mai",
+        "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember");
+    const Tag = new Array("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So");
+    // aktuelles Datum für die spätere Hervorhebung ermitteln
+    const jetzt = new Date();
+    let DieserTag = -1;
+    if ((jetzt.getFullYear() == Jahr) && (jetzt.getMonth() + 1 == Monat))
+        DieserTag = jetzt.getDate();
+    // ermittle Wochentag des ersten Tags im Monat halte diese Information in Start fest
+    // getDay liefert 0..6 für So..Sa. Wir möchten aber Mo=0 bis So=6, darum +6 und mod 7.
+    const Zeit = new Date(Jahr, Monat - 1, 1);
+    const Start = (Zeit.getDay() + 6) % 7;
+    // die meisten Monate haben 31 Tage...
+    let Stop = 31;
+    // ...April (4), Juni (6), September (9) und November (11) haben nur 30 Tage...
+    if (Monat == 4 || Monat == 6 || Monat == 9 || Monat == 11)
+        --Stop;
+    // ...und der Februar nur 28 Tage...
+    if (Monat == 2) {
+        Stop = Stop - 3;
+        // ...außer in Schaltjahren
+        if (Jahr % 4 == 0) Stop++;
+        if (Jahr % 100 == 0) Stop--;
+        if (Jahr % 400 == 0) Stop++;
+    }
+    const tabelle = document.getElementById(KalenderId);
+    if (!tabelle) return false;
+    // schreibe Tabellenüberschrift
+    const caption = tabelle.createCaption();
+    caption.innerHTML = Monatsname[Monat - 1] + " " + Jahr;
+    // schreibe Tabellenkopf
+    const headRow = tabelle.insertRow(0);
+    for (var i = 0; i < 7; i++) {
+        var cell = headRow.insertCell(i);
+        cell.innerHTML = Tag[i];
+    }
+    // ermittle Tag und schreibe Zeile
+    let Tageszahl = 1;
+    // Monate können 4 bis 6 Wochen berühren. Darum laufen, bis die Tageszahl hinter dem Monatsletzen liegt.
+    for (let i = 0; Tageszahl <= Stop; i++) {
+        let row = tabelle.insertRow(1 + i);
+        for (let j = 0; j < 7; j++) {
+            let cell = row.insertCell(j);
+            // Zellen vor dem Start-Tag in der ersten Zeile und Zeilen nach dem Stop-Tag werden leer aufgefüllt
+            if (((i == 0) && (j < Start)) || (Tageszahl > Stop)) {
+                cell.innerHTML = ' ';
+            } else {
+                let neueTagesZahl = '';
+                let neuMonat = '';
+                if (Tageszahl < 10) { neueTagesZahl = '0' + Tageszahl; } else { neueTagesZahl = Tageszahl; }
+                if (Monat < 10) { neuMonat = '0' + Monat; } else { neueMonat = Monat; }
+                // normale Zellen werden mit der Tageszahl befüllt und mit der Klasse Kalendertag markiert
+                cell.innerHTML = '<a id="link_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" >' + Tageszahl  +'</a>'+ '<br>';
+                cell.className = 'kalendertag'
+                cell.id = Jahr + '-' + neuMonat + '-' + neueTagesZahl;
+                // und der aktuelle Tag (heute) wird noch einmal speziell mit der Klasse "heute" markiert
+                if (Tageszahl == DieserTag) {
+                    cell.className = cell.className + ' heute';
+                } else if (Tageszahl < DieserTag) { cell.className = cell.className + ' alt'; }
+                Tageszahl++;
+            }
+        }
+    }
+    return true;
+}</script>
 
 <?php
-/* draws a calendar */
+foreach ($this->_params['trainingEntry'] as $value){
 
 
+echo '<script>
+function test(kalender){
+let test = document.getElementById(kalender)
 
+var tag = document.createElement("p");
+var text = document.createTextNode("Trainingstag");
+tag.appendChild(text);
+test.appendChild(tag);
 
-
-/* date settings */
-$month = (int) (isset($_GET['month']) ? $_GET['month'] : date('m'));
-$year = (int)  (isset($_GET['year']) ? $_GET['year'] : date('Y'));
-
-/* select month control */
-$select_month_control = '<select name="month" id="month">';
-for($x = 1; $x <= 12; $x++) {
-	$select_month_control.= '<option value="'.$x.'"'.($x != $month ? '' : ' selected="selected"').'>'.date('F',mktime(0,0,0,$x,1,$year)).'</option>';
+let test2 = document.getElementById("link_'.$value['trainingDate'].'").href="?a=start&trainingDate='.$value['trainingDate'].'";
 }
-$select_month_control.= '</select>';
+test("'.$value['trainingDate'].'");
 
-/* select year control */
-$year_range = 7;
-$select_year_control = '<select name="year" id="year">';
-for($x = ($year-floor($year_range/2)); $x <= ($year+floor($year_range/2)); $x++) {
-	$select_year_control.= '<option value="'.$x.'"'.($x != $year ? '' : ' selected="selected"').'>'.$x.'</option>';
+</script>';
 }
-$select_year_control.= '</select>';
-
-/* "next month" control */
-$next_month_link = '<a href="?month='.($month != 12 ? $month + 1 : 1).'&year='.($month != 12 ? $year : $year + 1).'" class="control">Next Month &gt;&gt;</a>';
-
-/* "previous month" control */
-$previous_month_link = '<a href="?month='.($month != 1 ? $month - 1 : 12).'&year='.($month != 1 ? $year : $year - 1).'" class="control">&lt;&lt; 	Previous Month</a>';
-
-
-/* bringing the controls together */
-$controls = '<form method="get">'.$select_month_control.$select_year_control.'&nbsp;<input type="submit" name="submit" value="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$previous_month_link.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$next_month_link.' </form>';
-
-
-
-$events = [];
-
-
-/* get all events for the given month 
-$events = array();
-$query = &quot;SELECT title, DATE_FORMAT(event_date,'%Y-%m-%D') AS event_date FROM events WHERE event_date LIKE '$year-$month%'&quot;;
-$result = mysql_query($query,$db_link) or die('cannot get results!');*/
-//while($row = mysql_fetch_assoc($result)) {
-	foreach ($this->_params['trainingEntry'] as $key => $value){
-	$events[$this->_params['trainingEntry'][$key]['trainingDate']] = $this->_params['trainingEntry'][$key];
-}
-
-echo '<h2 style="float:left; padding-right:30px;">'.date('F',mktime(0,0,0,$month,1,$year)).' '.$year.'</h2>';
-echo '<div style="float:left;">'.$controls.'</div>';
-echo '<div style="clear:both;"></div>';
-echo draw_calendar($month,$year,$events);
-echo '<br /><br />';

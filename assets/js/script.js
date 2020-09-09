@@ -51,14 +51,24 @@ function Kalender(Monat, Jahr, KalenderId) {
             if (((i == 0) && (j < Start)) || (Tageszahl > Stop)) {
                 cell.innerHTML = ' ';
             } else {
+                let neueTagesZahl = '';
+                let neuMonat = '';
+                if (Tageszahl < 10) { neueTagesZahl = '0' + Tageszahl; } else { neueTagesZahl = Tageszahl; }
+                if (Monat < 10) { neuMonat = '0' + Monat; } else { neueMonat = Monat; }
                 // normale Zellen werden mit der Tageszahl befüllt und mit der Klasse Kalendertag markiert
-                cell.innerHTML = Tageszahl;
-                cell.innerHTML += '</br>' + "<a href=''>Training eintragen</a>"
+                cell.innerHTML = '<a href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" >' + Tageszahl;
+                cell.innerHTML += '</br></br> <?php if(isset($events[$event_day])) {';
+                //foreach($events[$event_day] as $event) {
+                cell.innerHTML += 'echo "<a href=\"?a=chooseTypeOfTraining&trainingDate=\"".$this->_params["events"]["trainingDate"]."\" >Dein Trainingseintrag</a>";';
+                //$calendar.= '<div class="event">'.$events[$event_day]['trainingDate'].'</div>';/////////////
+                // }
+                cell.innerHTML += ' } ?></a>'
                 cell.className = 'kalendertag'
-                    // und der aktuelle Tag (heute) wird noch einmal speziell mit der Klasse "heute" markiert
+                cell.id = neueTagesZahl;
+                // und der aktuelle Tag (heute) wird noch einmal speziell mit der Klasse "heute" markiert
                 if (Tageszahl == DieserTag) {
                     cell.className = cell.className + ' heute';
-                }
+                } else if (Tageszahl < DieserTag) { cell.className = cell.className + ' alt'; }
                 Tageszahl++;
             }
         }
