@@ -1,9 +1,10 @@
 <h1>Monatskalender</h1>
 <main>
-	<table id="kalender"> </table>
+    <table class="k" id="kalender"> </table>
+    <button style="float:right;" onclick="nextMonth()" name="submitLogin" class="btn btn-primary">next month</button>
 </main>
 <script>const d = new Date();
-const dm = d.getMonth() + 1;
+const dm = d.getMonth() +1;
 const dj = d.getYear() + 1900;
 Kalender(dm, dj, 'kalender');
 
@@ -38,11 +39,13 @@ function Kalender(Monat, Jahr, KalenderId) {
     // schreibe Tabellenüberschrift
     const caption = tabelle.createCaption();
     caption.innerHTML = Monatsname[Monat - 1] + " " + Jahr;
+    caption.id = 'caption';
     // schreibe Tabellenkopf
     const headRow = tabelle.insertRow(0);
     for (var i = 0; i < 7; i++) {
         var cell = headRow.insertCell(i);
         cell.innerHTML = Tag[i];
+        
     }
     // ermittle Tag und schreibe Zeile
     let Tageszahl = 1;
@@ -51,6 +54,7 @@ function Kalender(Monat, Jahr, KalenderId) {
         let row = tabelle.insertRow(1 + i);
         for (let j = 0; j < 7; j++) {
             let cell = row.insertCell(j);
+            cell.setAttribute("style", "height: 100px;"); 
             // Zellen vor dem Start-Tag in der ersten Zeile und Zeilen nach dem Stop-Tag werden leer aufgefüllt
             if (((i == 0) && (j < Start)) || (Tageszahl > Stop)) {
                 cell.innerHTML = ' ';
@@ -60,9 +64,18 @@ function Kalender(Monat, Jahr, KalenderId) {
                 if (Tageszahl < 10) { neueTagesZahl = '0' + Tageszahl; } else { neueTagesZahl = Tageszahl; }
                 if (Monat < 10) { neuMonat = '0' + Monat; } else { neueMonat = Monat; }
                 // normale Zellen werden mit der Tageszahl befüllt und mit der Klasse Kalendertag markiert
-                cell.innerHTML = '<a id="link_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" >' + Tageszahl  +'</a>'+ '<br>';
+                if (Tageszahl >= DieserTag){ 
+
+                    cell.innerHTML = '<a href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" ><div style = " margin-top:10px; font-weight: bold; height: 100px;width:100px"> <i class="fa fa-edit" style="font-size:16px"><p style=" float:right">' +Tageszahl  +'</p></i><i  id="i_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" style="margin-top:50px; color: rgb(101, 248, 113); ; display:none; font-size:16px" class="fas">&#xf44b;</i></div></a>';
+
+                }
+                else{   
+                   
+                    cell.innerHTML = '<a id="link_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" ><div style = "margin-top:10px; font-weight: bold; height: 100px;width:100px">' + Tageszahl  + '</i>'+'<i  id="i_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" style="margin-top:60px; color: grey;  display:none; font-size:16px" class="fas">&#xf44b;</i></div></a>';
+                }
                 cell.className = 'kalendertag'
                 cell.id = Jahr + '-' + neuMonat + '-' + neueTagesZahl;
+                
                 // und der aktuelle Tag (heute) wird noch einmal speziell mit der Klasse "heute" markiert
                 if (Tageszahl == DieserTag) {
                     cell.className = cell.className + ' heute';
@@ -72,7 +85,24 @@ function Kalender(Monat, Jahr, KalenderId) {
         }
     }
     return true;
-}</script>
+}
+
+function nextMonth(){
+    let test3 = document.getElementById("caption");
+    const Monatsname = new Array("Januar", "Februar", "März", "April", "Mai",
+        "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember");
+        const dm = d.getMonth() +2;
+        const dj = d.getYear() + 1900;
+    if(dm == 13){
+        dm = 1;
+        dj = d.getYear() + 1901;
+    }
+
+    caption.innerHTML = Monatsname[dm - 1] + " " + dj;
+}
+
+</script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <?php
 foreach ($this->_params['trainingEntry'] as $value){
@@ -82,12 +112,13 @@ echo '<script>
 function test(kalender){
 let test = document.getElementById(kalender)
 
-var tag = document.createElement("p");
-var text = document.createTextNode("Trainingstag");
-tag.appendChild(text);
-test.appendChild(tag);
 
+
+
+let test3 = document.getElementById("i_'.$value['trainingDate'].'").style.display ="inherit";
 let test2 = document.getElementById("link_'.$value['trainingDate'].'").href="?a=start&trainingDate='.$value['trainingDate'].'";
+
+
 }
 test("'.$value['trainingDate'].'");
 

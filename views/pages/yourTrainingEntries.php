@@ -1,8 +1,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <h1>Your Training entrys</h1>
-https://www.codexworld.com/load-more-data-using-jquery-ajax-php-from-database/
-<p><?=  $this->_params['test'] ?></p>
+
+
 
 <?php foreach ($this->_params['trainingEntry'] as $value): ?>
 

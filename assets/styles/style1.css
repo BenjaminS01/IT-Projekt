@@ -15,6 +15,31 @@
         height: 100%;
     }
     
+    h1 {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    
+    @media (max-width: 767px)
+    /* @grid-float-breakpoint -1 */
+    
+    {
+        h1 {
+            margin-top: 100px;
+            margin-bottom: 50px;
+        }
+    }
+    
+    @media (min-width: 767px)
+    /* @grid-float-breakpoint -1 */
+    
+    {
+        nav {
+            position: relative !important;
+            top: auto !important;
+        }
+    }
+    
     .login .mx-auto {
         max-width: 700px;
         width: 70%;
@@ -34,17 +59,35 @@
     }
     /*******************Kalender (JAVASCRIPT)*****/
     
-    table {
+    .k table {
         width: 800px;
     }
     
-    table,
-    td,
-    caption {
-        border: 1px solid black;
+    .k table,
+    .k td,
+    .k caption {
         border-collapse: collapse;
-        padding: 1em;
         text-align: center;
+    }
+    
+    .k table {
+        margin-top: 40px;
+        border: 1px solid black;
+        padding: 1em;
+    }
+    
+    .k td {
+        border: 3px solid black;
+        padding: 1em;
+    }
+    
+    .k caption {
+        border: 3px solid black;
+        padding: 0.5em;
+    }
+    
+    .k a {
+        color: black;
     }
     /* 
     td:nth-of-type(6),
@@ -54,20 +97,20 @@
     }
     */
     
-    caption,
-    tr:first-of-type {
+    .k caption,
+    .k tr:first-of-type {
         background: #666;
         color: #c4ced3;
         font-weight: bold;
     }
     
-    td.heute {
+    .k td.heute {
         color: red;
         font-weight: bold;
         background: #abdcf8;
     }
     
-    td.alt {
+    .k td.alt {
         font-weight: bold;
         background: #d1d1d1;
     }
@@ -192,3 +235,4 @@
     .table {
         font-size: 20px;
     }
+    /*******https://www.codexworld.com/load-more-data-using-jquery-ajax-php-from-database/*/

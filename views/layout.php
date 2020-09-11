@@ -9,7 +9,7 @@
 
 <body>
 <!-- Nav tabs -->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
         <a href="?a=start" class="navbar-brand">Home</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
