@@ -219,11 +219,18 @@ class PagesController extends \Trainingskalender\core\Controller
 
         $newDate =  subOneMonth();
        
-        $this->_params['test'] = $newDate;
+        $this->_params['test'] = 'start';
 
         $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
         ::find('trainingDate >= \''. $newDate.'\'',' order by trainingDate');
         
+
+
+    }
+
+    
+    public function actionYourTrainingDetails(){
+
 
     }
 

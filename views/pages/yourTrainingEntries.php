@@ -18,20 +18,25 @@
     $db = $GLOBALS['db'];
     $memberId = getMemberId();
 
-    $query = $db->prepare("SELECT * FROM trainingEntry WHERE memberId = ".$memberId. " ORDER BY id DESC LIMIT 5");
+    $query = $db->prepare("SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId = ".$memberId. " ORDER BY TrainingDate DESC LIMIT 10");
     $query->execute();
     $result = $query->fetchall();
 
     
     if(count($result) > 0){ 
         foreach($result as $row){ 
-            $postID = $row['id'];
+            $postID = $row['trainingDate'];
 
-            $query1 = $db->prepare("SELECT * FROM ViewAreaTimeslot WHERE id = ".$row['areaTimeslotId']);
-            $query1->execute();
-            $view = $query1->fetchall();
+     
     ?>
-    <div class="list_item"><?php echo $row['id'].' '.$row['trainingDate']. ' <br> '.$view[0]['startTime'].'-'.$view[0]['endTime'].' Uhr '.$view[0]['course']; ?></div>
+    <div class="list_item">
+        <div class="container">
+            <div class="row">
+            <div class="col-sm"><p><?php echo $row['trainingDate'] ?> </p></div>
+            <div class="col-sm"><button type="button" class="btn btn-success btn-lg"> Trainingsdetails </button></div>
+            </div>
+        </div>
+    </div>
     <?php } ?>
     <div class="show_more_main" id="show_more_main<?php echo $postID; ?>">
         <span id="<?php echo $postID; ?>" class="show_more" title="Load more posts">Show more</span>
