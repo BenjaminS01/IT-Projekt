@@ -8,19 +8,7 @@ class PagesController extends \Trainingskalender\core\Controller
 
     public function actionStart(){
 
-        $this->_params['Montag'] =  \Trainingskalender\models\ViewAreaTimeslot
-        ::find('labelling like \'%Kurs%\' and weekday = \'1\' order by startTime ASC');
-        $this->_params['Dienstag'] =  \Trainingskalender\models\ViewAreaTimeslot
-        ::find('labelling like \'%Kurs%\' and weekday = \'2\' order by startTime ASC');
-        $this->_params['Mittwoch'] =  \Trainingskalender\models\ViewAreaTimeslot
-        ::find('labelling like \'%Kurs%\' and weekday = \'3\' order by startTime ASC');
-        $this->_params['Donnerstag'] =  \Trainingskalender\models\ViewAreaTimeslot
-        ::find('labelling like \'%Kurs%\' and weekday = \'4\' order by startTime ASC');
-        $this->_params['Freitag'] =  \Trainingskalender\models\ViewAreaTimeslot
-        ::find('labelling like \'%Kurs%\' and weekday = \'5\' order by startTime ASC');
-
-        $times = [];
-        $this->_params['weekdays'] = array('Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag');
+        
 
         $errors = [];
        if(isset($_GET['param'])) {
@@ -231,7 +219,38 @@ class PagesController extends \Trainingskalender\core\Controller
     
     public function actionYourTrainingDetails(){
 
+        $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
+        ::find('trainingDate >= \''. $_GET['id'].'\'',' order by trainingDate');
 
     }
 
+    
+    public function actionYourTrainingDay(){
+
+        $member = getMemberId();
+
+        $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
+        ::find('trainingDate = \''. $_GET['trainingDate'].'\'','and memberId= \''.$member.'\' order by startTime');
+
+        
+
+
+
+    }
+
+    public function actionCourse(){
+        $this->_params['Montag'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'1\' order by startTime ASC');
+        $this->_params['Dienstag'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'2\' order by startTime ASC');
+        $this->_params['Mittwoch'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'3\' order by startTime ASC');
+        $this->_params['Donnerstag'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'4\' order by startTime ASC');
+        $this->_params['Freitag'] =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('labelling like \'%Kurs%\' and weekday = \'5\' order by startTime ASC');
+
+        $times = [];
+        $this->_params['weekdays'] = array('Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag');
+    }
 }

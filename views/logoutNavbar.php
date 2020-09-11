@@ -6,6 +6,9 @@
 <li class="nav-item">
     <a href="?a=yourTrainingEntries" class="nav-link">Deine Einträge</a>
 </li>
+<li class="nav-item">
+    <a href="?a=course" class="nav-link">Kursplanung</a>
+</li>
 </ul>
 <ul class="navbar-nav ml-auto">
      <li class="nav-item">

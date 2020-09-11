@@ -66,12 +66,12 @@ function Kalender(Monat, Jahr, KalenderId) {
                 // normale Zellen werden mit der Tageszahl befüllt und mit der Klasse Kalendertag markiert
                 if (Tageszahl >= DieserTag){ 
 
-                    cell.innerHTML = '<a href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" ><div style = " margin-top:10px; font-weight: bold; height: 100px;width:100px"> <i class="fa fa-edit" style="font-size:16px"><p style=" float:right">' +Tageszahl  +'</p></i><i  id="i_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" style="margin-top:50px; color: rgb(101, 248, 113); ; display:none; font-size:16px" class="fas">&#xf44b;</i></div></a>';
+                    cell.innerHTML = '<div style = " margin-top:10px; font-weight: bold; height: 100px;width:100px"><a href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" > <i class="fa fa-edit" style="font-size:18px"><p style=" float:right">' +Tageszahl  +'</p></i></a><br><br><br><a href="?a=yourTrainingDay&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '"><i  id="i_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" style=" color: rgb(101, 248, 113); ; display:none; font-size:16px" class="fas">&#xf44b;</i></a></div>';
 
                 }
                 else{   
                    
-                    cell.innerHTML = '<a id="link_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" ><div style = "margin-top:10px; font-weight: bold; height: 100px;width:100px">' + Tageszahl  + '</i>'+'<i  id="i_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" style="margin-top:60px; color: grey;  display:none; font-size:16px" class="fas">&#xf44b;</i></div></a>';
+                    cell.innerHTML = '<div style = "margin-top:10px; font-weight: bold; height: 100px;width:100px"><a id="link_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" href="?a=yourTrainingEntries&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" ><i class="fa fa-calendar-check-o" style="font-size:18px"><p style=" float:right">' + Tageszahl  + '</p></i></a><br><br><br class="test"><a href="?a=yourTrainingDay&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '"><i  id="i_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" style="margin-top:60px; color: grey;  display:none; font-size:16px" class="fas">&#xf44b;</i></a></div>';
                 }
                 cell.className = 'kalendertag'
                 cell.id = Jahr + '-' + neuMonat + '-' + neueTagesZahl;
@@ -103,6 +103,7 @@ function nextMonth(){
 
 </script>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <?php
 foreach ($this->_params['trainingEntry'] as $value){
@@ -116,7 +117,7 @@ let test = document.getElementById(kalender)
 
 
 let test3 = document.getElementById("i_'.$value['trainingDate'].'").style.display ="inherit";
-let test2 = document.getElementById("link_'.$value['trainingDate'].'").href="?a=start&trainingDate='.$value['trainingDate'].'";
+
 
 
 }

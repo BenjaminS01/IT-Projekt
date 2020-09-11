@@ -28,11 +28,20 @@ if(!empty($_POST["id"])){
 
          
     ?>
-           <div class="list_item">
+    <div class="list_item">
         <div class="container">
             <div class="row">
             <div class="col-sm"><p><?php echo $row['trainingDate']?> </p></div>
-            <div class="col-sm"><button type="button" class="btn btn-success btn-lg"> Trainingsdetails </button></div>
+            <div class="col-sm">
+            <form method="get"  class="needs-validation" novalidate>
+            <div class="form-group">
+            <input type="hidden"  name="c" value="pages">
+            <input type="hidden"  name="a" value="yourTrainingDay">
+            <input type="hidden"  name="trainingDate" value='<?php echo $row['trainingDate'] ?>'>
+            <button type="submit" class="btn btn-success btn-lg"> Trainingsdetails </button>
+            </div>
+            </form>
+            </div>
             </div>
         </div>
     </div>

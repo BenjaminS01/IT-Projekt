@@ -1,5 +1,6 @@
 <div class="register">
   <div class="mx-auto">
+    <h1>Registrierung</h1>
     <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=register'; ?>" class="needs-validation" novalidate>
       <div class="form-group">
         <label for="email">Vorname:</label>
@@ -66,7 +67,7 @@
       </div>
 
 
-      <button type="submit" class="btn btn-primary" name="submitRegister">Registrieren</button>
+      <button type="submit" class="btn btn-success" name="submitRegister">Registrieren</button>
     </form>
   </div>
 </div>

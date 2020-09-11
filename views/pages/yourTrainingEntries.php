@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<h1>Your Training entrys</h1>
+<h1 >Ihre Trainingstage</h1>
+
 
 
 
@@ -33,7 +34,16 @@
         <div class="container">
             <div class="row">
             <div class="col-sm"><p><?php echo $row['trainingDate'] ?> </p></div>
-            <div class="col-sm"><button type="button" class="btn btn-success btn-lg"> Trainingsdetails </button></div>
+            <div class="col-sm">
+            <form method="get"  class="needs-validation" novalidate>
+            <div class="form-group">
+            <input type="hidden"  name="c" value="pages">
+            <input type="hidden"  name="a" value="yourTrainingDay">
+            <input type="hidden"  name="trainingDate" value='<?php echo $row['trainingDate'] ?>'>
+            <button type="submit" class="btn btn-success btn-lg"> Trainingsdetails </button>
+            </div>
+            </form>
+            </div>
             </div>
         </div>
     </div>
@@ -46,6 +56,7 @@
     </div>
     <?php } ?>
 </div>
+
 
 <script type="text/javascript">
 $(document).ready(function(){

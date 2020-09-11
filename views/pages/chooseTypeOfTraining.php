@@ -1,13 +1,13 @@
-<?php echo $this->_params['date']->format('N') ?>
-
-<div class="chooseTypeOfTraining">
-  <div class="mx-auto">
+<div class="chooseTypeOfTraining ">
+<div class="container ">
+<h3 >Bitte wälen Sie einen Trainingstyp</h3>
+ 
     <form method="get"  class="needs-validation" novalidate>
       <div class="form-group">
       <input type="hidden"  name="c" value="pages">
       <input type="hidden"  name="a" value="chooseTimeAndRoom">
-      <label for="tel">Trainingsart:</label>
-      <br>
+      <label style="margin-right:20px;"  for="tel">Trainingsart:</label>
+      
       <?php
                 if($this->_params['date']->format('N')!= 6 && $this->_params['date']->format('N') != 7) {
                       include 'views/noWeekend.php';
@@ -21,7 +21,8 @@
       </div>
       <input type="hidden" id="trainingDate2" name="trainingDate" value="<?= $_GET['trainingDate']?>">
       </div>
-      <button type="submit"  class="btn btn-primary">weiter</button>
+      <button type="submit"  class="btn btn-success">weiter</button>
     </form>
-  </div>
+ 
 </div>
+              </div>
