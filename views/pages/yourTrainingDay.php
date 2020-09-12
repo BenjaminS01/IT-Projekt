@@ -1,6 +1,6 @@
 
 <h1>Deine Trainingszeiten für den <?=$_GET['trainingDate']?></h1>
-
+<div class="trainingDay">
 
   <?php foreach ($this->_params['trainingEntry'] as $value): ?>
   <?php $view =  \Trainingskalender\models\ViewAreaTimeslot
@@ -9,8 +9,8 @@
         
 <div class="container">
 <h3><?=$view[0]['course'].', '.$view[0]['startTime'].'-'.$view[0]['endTime']?></h3>
-  <table class="table">
-    <thead class="thead-dark">
+  <table class="table table-bordered">
+    <thead >
       <tr>
         <th>Zeitslot</th>
         <th>Bereich</th>
@@ -41,6 +41,24 @@
     </tbody>
   </table>  
 </div>
+<div class="container">
+          <div class="box1">
+            <form action="">
+            <input type="hidden"  name="c" value="pages">
+      <input type="hidden"  name="a" value="editPersonalData">
+                  <button type="submit" class="btn btn-warning">Trainingseintrag ändern</button>
+                </form>
+                </div>
+                     
+            <div class="box">
+            <form action="">
+            <input type="hidden"  name="c" value="pages">
+      <input type="hidden"  name="a" value="editPassword">
+                  <button type="submit" class="btn btn-danger">Trainingseintrag löschen</button>
+                </form>
+              </div>
+            
+  </div>
   <?php endforeach; ?>
-
+  </div>
 

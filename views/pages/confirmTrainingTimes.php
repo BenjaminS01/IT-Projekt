@@ -3,8 +3,8 @@
 <h3>Für Ihr Training am <?= $_POST['trainingDate']?> haben wir folgende Trainingsplanung erstellt</h3>
 <br>
 
-  <table class="table">
-    <thead class="thead-dark">
+  <table class="table table-bordered">
+    <thead >
       <tr>
         <th>Zeitslot</th>
         <th>Bereich</th>
@@ -49,6 +49,6 @@
       <input type="hidden" id="trainingType2" name="memberId" value="<?= $this->_params['memberId']?>">
       <input type="hidden" id="trainingType2" name="areaTimeslotId" value="<?= $this->_params['viewAreaTimeslot'][0]['id']?>">   
 
-  <button type="submit" name="submitTrainingEntry" class="btn btn-primary" >Eintrag bestätigen</button>
+  <button type="submit" name="submitTrainingEntry" class="btn btn-success" >Eintrag bestätigen</button>
 </form>
 </div>

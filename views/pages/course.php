@@ -3,7 +3,7 @@
 <div class="course">
 <div class="container">
 <h3>Montag</h3>
-<table class="table table-sm text-sm-left">
+<table class="table table-bordered">
   <tr>
         <th>Zeitslot</th>
         <th>Bereich</th>
@@ -21,7 +21,7 @@
 </div>
 <div class="container">
 <h3>Dienstag</h3>
-<table class="table table-sm">
+<table class="table table-bordered ">
 <tr>
         <th>Zeitslot</th>
         <th>Bereich</th>
@@ -39,7 +39,7 @@
 
 <div class="container">
 <h3>Mittwoch</h3>
-<table class="table table-sm">
+<table class="table table-bordered">
 <tr>
         <th>Zeitslot</th>
         <th>Bereich</th>
@@ -56,7 +56,7 @@
 </div>
 <div class="container">
 <h3>Donnerstag</h3>
-<table class="table table-sm">
+<table class="table table-bordered">
 <tr>
         <th>Zeitslot</th>
         <th>Bereich</th>
@@ -74,7 +74,7 @@
 </div>
 <div class="container">
 <h3>Freitag</h3>
-<table class="table table-sm">
+<table class="table table-bordered">
 <tr>
         <th>Zeitslot</th>
         <th>Bereich</th>

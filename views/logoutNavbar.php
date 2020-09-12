@@ -1,6 +1,9 @@
 
 <ul class="navbar-nav">
 <li class="nav-item">
+    <a href="?a=account" class="nav-link">Account</a>
+</li>
+<li class="nav-item">
     <a href="?a=kalender" class="nav-link">Kalender</a>
 </li>
 <li class="nav-item">

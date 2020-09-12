@@ -44,9 +44,7 @@ class PagesController extends \Trainingskalender\core\Controller
 
             $this->_params['error'] = $errors;
         }
-       
-      
-       
+        
     }
 
     public function actionRegister(){
@@ -67,6 +65,58 @@ class PagesController extends \Trainingskalender\core\Controller
            
         }
 
+    }
+
+    public function actionAccount(){
+        $memberId = getMemberId();
+
+        $this->_params['member'] = \Trainingskalender\models\Member::find('id= ' . '\'' . $memberId . '\'');
+    }
+
+    public function actionEditPersonalData(){
+        $errors = [];
+        $memberId = getMemberId();
+
+        $this->_params['member'] = \Trainingskalender\models\Member::find('id= ' . '\'' . $memberId . '\'');
+
+        if(isset($_POST['submitEdit'])){
+            $id = $this->_params['member'][0]['id'];
+            $gender =  $this->_params['member'][0]['gender'];
+            $password = $this->_params['member'][0]['password'];
+            if(isValidPersonalData($errors, $this->_params['member'])){
+                editPersonalData($errors, $id, $gender, $password);
+            }
+    
+            if(count($errors) === 0){
+                header('Location: index.php?c=pages&a=account');
+            }
+          echo $errors;
+            $this->_params['error'] = $errors;
+        }
+    }
+    public function actionEditPassword(){
+        $errors = [];
+        $memberId = getMemberId();
+
+        $this->_params['member'] = \Trainingskalender\models\Member::find('id= ' . '\'' . $memberId . '\'');
+        if(isset($_POST['submitEdit'])){
+            $id = $this->_params['member'][0]['id'];
+            $firstName = $this->_params['member'][0]['firstName'];
+            $lastName = $this->_params['member'][0]['lastName'];
+            $gender = $this->_params['member'][0]['gender'];
+            $phoneNumber = $this->_params['member'][0]['phoneNumber']; 
+            $email = $this->_params['member'][0]['email'];
+
+            if(isValidPassword($errors,$this->_params['member'] )){
+                editPassword($errors,$id,$firstName,$lastName,$gender,$phoneNumber,$email);
+            }
+    
+            if(count($errors) === 0){
+                header('Location: index.php?c=pages&a=account');
+            }
+          
+            $this->_params['error'] = $errors;
+        }
     }
 
     public function actionKalender(){
@@ -230,11 +280,7 @@ class PagesController extends \Trainingskalender\core\Controller
         $member = getMemberId();
 
         $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
-        ::find('trainingDate = \''. $_GET['trainingDate'].'\'','and memberId= \''.$member.'\' order by startTime');
-
-        
-
-
+        ::find('memberId= \''.$member.'\' and trainingDate =\''.$_GET['trainingDate'].'\'');
 
     }
 

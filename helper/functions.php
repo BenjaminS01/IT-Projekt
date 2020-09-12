@@ -34,6 +34,16 @@ function arePwdAndPwdCheckTheSame(&$errors){
     }
 }
 
+function areNewPwdAndNewPwdCheckTheSame(&$errors){
+    if($_POST['newPassword']===$_POST['passwordCheck']){
+        return true;
+    }
+    else{
+        array_push($errors, "beide Passwortfelder müssen übereinstimmen");
+        return false;
+    }
+}
+
 function isEmailUnique(&$errors)
 {
     $result = \Trainingskalender\models\Member::find('email= ' . '\'' . $_POST['email'] . '\'');
@@ -64,6 +74,25 @@ function isPasswordValid(&$errors)
     return true;
 }
 
+function isNewPasswordValid(&$errors)
+{
+
+    if (!preg_match('/[a-zA-Z]/', $_POST['newPassword'])) {
+        array_push($errors, "Verwenden Sie mindestens ein Buchstabensymbol für Ihr Passwort");
+        return false;
+    }
+    if (!preg_match('/[0-9]/', $_POST['newPassword'])) {
+
+        array_push($errors, "Verwenden Sie mindestens ein Nummernsymbol für Ihr Passwort");
+        return false;
+    }
+    if (strlen($_POST['newPassword']) < 8) {
+        array_push($errors, "Bitte verwenden Sie mindestens 8 Symbole für Ihr Passwort");
+        return false;
+    }
+    return true;
+}
+
 function isValidRegister(&$errors){
    $arePwTheSame  = arePwdAndPwdCheckTheSame($errors);
    $isEmailUnique = isEmailUnique($errors);
@@ -76,6 +105,73 @@ function isValidRegister(&$errors){
        return false;
    }
 }
+
+function isValidPersonalData(&$errors, $member){
+    
+
+    $isEmailUnique = true;
+    if($_POST['email']!==$member[0]['email']){
+
+        $isEmailUnique = isEmailUnique($errors);
+    }
+
+ 
+    if($isEmailUnique){
+        return true;
+    }
+    else{
+        return false;
+    }
+ }
+
+ function isValidPassword(&$errors, $member){
+    $arePwTheSame  = areNewPwdAndNewPwdCheckTheSame($errors);
+    $isPasswordValid = isNewPasswordValid($errors);
+    $isPasswordFromUser = isPasswordfromUser($errors, $member);
+ 
+    if($arePwTheSame && $isPasswordValid && $isPasswordFromUser){
+        return true;
+    }
+    else{
+        return false;
+    }
+ }
+
+ function editPassword(&$errors, $id, $firstName, $lastName,$gender, $phoneNumber, $email){
+    $password = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
+
+    $member = [
+    'id' => $id,
+    'firstName' => $firstName,
+    'lastName' => $lastName,
+    'gender' => $gender,
+    'phoneNumber' => $phoneNumber,
+    'email' => $email,
+    'password' => $password
+    ];
+
+    $member = new \Trainingskalender\models\Member($member);
+
+    $member->save($errors);
+ }
+
+ function editPersonalData(&$errors, $id,$gender,$password){
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $member = [
+    'id' => $id,
+    'firstName' => $_POST['firstName'],
+    'lastName' => $_POST['lastName'],
+    'gender' => $gender,
+    'phoneNumber' => $_POST['phoneNumber'],
+    'email' => $_POST['email'],
+    'password' => $password
+    ];
+
+    $member = new \Trainingskalender\models\Member($member);
+
+    $member->save($errors);
+ }
 
 /*
 function isPasswordfromUser($password, $email, &$errors, $isEmail=true)

@@ -1,26 +1,47 @@
 <div class="account">
-  <div class="mx-auto">
-    <form action="/action_page.php" class="needs-validation" novalidate>
-      <div class="form-group">
-        <label for="email">Vorname:</label>
-        <input type="text" class="form-control" id="registerEmail" placeholder="E-Mail" name="email" required>
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
-      </div>
-      <div class="form-group">
-        <label for="pwd">Nachname:</label>
-        <input type="password" class="form-control" id="registerPasswort" placeholder="Passwort" name="pswd" required>
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
-      </div>
-      <div class="form-group">
-        <label for="tel">Telefonnummer:</label>
-        <input type="password" class="form-control" id="registerPhone" placeholder="Telefonnummer" name="tel" required>
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
-      </div>
+  
+  <div class="container">
+    <h1>Accountverwaltung</h1>
+  <table class="table table-bordered">
 
-      <button type="submit" class="btn btn-primary">Registrieren</button>
-    </form>
+    <tbody>
+      <tr>
+        <td>Vorname: </td>
+        <td><?= $this->_params['member'][0]['firstName']?></td>
+      </tr>
+      <tr>
+        <td>Nachname</td>
+        <td><?= $this->_params['member'][0]['lastName']?></td>
+      </tr>
+      <tr>
+        <td>Handynummer:</td>
+        <td><?= $this->_params['member'][0]['phoneNumber']?></td>
+      </tr>
+      <tr>
+        <td>email: </td>
+        <td><?= $this->_params['member'][0]['email']?></td>
+      </tr>
+    </tbody>
+  </table>  
+  </div>
+  <div class="container">
+          <div class="box1">
+            <form action="">
+            <input type="hidden"  name="c" value="pages">
+      <input type="hidden"  name="a" value="editPersonalData">
+                  <button type="submit" class="btn btn-warning">Persönliche Daten ändern</button>
+                </form>
+                </div>
+                
+           
+           
+            <div class="box">
+            <form action="">
+            <input type="hidden"  name="c" value="pages">
+      <input type="hidden"  name="a" value="editPassword">
+                  <button type="submit" class="btn btn-warning">Passwort ändern</button>
+                </form>
+              </div>
+            
   </div>
 </div>
