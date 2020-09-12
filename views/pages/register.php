@@ -1,20 +1,17 @@
 <div class="register">
   <div class="mx-auto">
     <h1>Registrierung</h1>
-    <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=register'; ?>" class="needs-validation" novalidate>
+    <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=register'; ?>" >
       <div class="form-group">
         <label for="email">Vorname:</label>
-        <input type="text" class="form-control" id="registerFirstName" placeholder="Vorname" name="firstName" required 
+        <input type="text" class="form-control" id="registerFirstName" placeholder="Vorname" name="firstName" 
         value="<?= isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : '' ?>">
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
+
       </div>
       <div class="form-group">
         <label for="password">Nachname:</label>
-        <input type="text" class="form-control" id="registerLastname" placeholder="Nachname" name="lastName" required 
+        <input type="text" class="form-control" id="registerLastname" placeholder="Nachname" name="lastName" 
         value="<?= isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : '' ?>">
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>
 
       <label for="tel">Geschlecht:</label>
@@ -34,36 +31,29 @@
 
       <div class="form-group">
         <label for="phoneNumber">Telefonnummer:</label>
-        <input type="text" class="form-control" id="registerPhone" placeholder="Telefonnummer" name="phoneNumber" required
+        <input type="text" class="form-control" id="registerPhone" placeholder="Telefonnummer" name="phoneNumber" 
         value="<?= isset($_POST['phoneNumber']) ? htmlspecialchars($_POST['phoneNumber']) : '' ?>">
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
       </div>
 
 
       <div class="form-group">
         <label for="pwd">E-Mail:</label>
-        <input type="text" class="form-control" id="registerEmail" placeholder="E-Mail" name="email" required 
+        <input type="text" class="form-control" id="registerEmail" placeholder="E-Mail" name="email" 
         value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
+
       </div>
 
       <div class="form-group">
         <label for="password">Passwort:</label>
-        <input type="password" class="form-control" id="registerPassword" placeholder="Passwort" name="password" required
+        <input type="password" class="form-control" id="registerPassword" placeholder="Passwort" name="password" 
         onkeyup="validatePassword();">
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
         <div class="passwordMessage">
-            <label id="feedback"></label>
+        <label id="feedback"></label>
         </div>
       </div>
       <div class="form-group">
         <label for="passwordCheck">Passwort wiederholen:</label>
-        <input type="password" class="form-control" id="registerPasswordCheck" placeholder="Passwort wiederholen" name="passwordCheck" required>
-        <div class="valid-feedback">Gültig</div>
-        <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>
+        <input type="password" class="form-control" id="registerPasswordCheck" placeholder="Passwort wiederholen" name="passwordCheck" >
       </div>
 
 

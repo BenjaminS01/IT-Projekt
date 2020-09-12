@@ -32,9 +32,7 @@
                   <button type="submit" class="btn btn-warning">Persönliche Daten ändern</button>
                 </form>
                 </div>
-                
-           
-           
+                     
             <div class="box">
             <form action="">
             <input type="hidden"  name="c" value="pages">

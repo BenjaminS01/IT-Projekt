@@ -1,6 +1,6 @@
 
-
-
+<div class="container">
+<h1>Bitte Wählen Sie Ihr Training</h1>
 
 <div class="chooseTimeAndRoom">
   <div class="mx-auto">
@@ -26,9 +26,10 @@
                 
       
       </div>
-      <button type="submit" name="submitChooseTimeAndRoom" class="btn btn-primary">Weiter</button>
+      <button type="submit" name="submitChooseTimeAndRoom" class="btn btn-success">Weiter</button>
     </form>
   </div>
+</div>
 </div>
 
 

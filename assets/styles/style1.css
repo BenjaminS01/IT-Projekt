@@ -26,7 +26,7 @@
     }
     
     .table {
-        margin-bottom: 100px;
+        margin-bottom: 70px;
     }
     
     .trainingDay h3 {
@@ -47,7 +47,7 @@
         box-sizing: border-box;
     }
     
-    .account button {
+    button {
         min-width: 200px;
     }
     
@@ -59,14 +59,24 @@
         margin: 0 auto!important;
     }
     
-    .chooseTypeOfTraining button {
-        width: 300px;
+    .trainingArea {
+        margin-top: 40px;
+    }
+    
+    select {
+        max-width: 600px;
     }
     
     @media (max-width: 767px)
     /* @grid-float-breakpoint -1 */
     
     {
+        .navbar button {
+            min-width: 50px!important;
+        }
+        .box1 {
+            margin-bottom: 18px;
+        }
         h3 {
             margin-top: 70px;
             margin-bottom: 20px;

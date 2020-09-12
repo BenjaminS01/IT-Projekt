@@ -1,4 +1,4 @@
-
+<div class="container">
 <h1>Deine Trainingszeiten für den <?=$_GET['trainingDate']?></h1>
 <div class="trainingDay">
 
@@ -60,5 +60,6 @@
             
   </div>
   <?php endforeach; ?>
+  </div>
   </div>
 

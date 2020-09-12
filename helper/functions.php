@@ -94,11 +94,13 @@ function isNewPasswordValid(&$errors)
 }
 
 function isValidRegister(&$errors){
+
+   requiredCheck($errors);
    $arePwTheSame  = arePwdAndPwdCheckTheSame($errors);
    $isEmailUnique = isEmailUnique($errors);
    $isPasswordValid = isPasswordValid($errors);
 
-   if($arePwTheSame && $isEmailUnique && $isPasswordValid){
+   if($arePwTheSame && $isEmailUnique && $isPasswordValid && count($errors)==0){
        return true;
    }
    else{
@@ -172,6 +174,30 @@ function isValidPersonalData(&$errors, $member){
 
     $member->save($errors);
  }
+
+ function requiredCheck(&$errors)
+{
+    //country, year, month and day can not be unset
+    if (isset($_POST['firstName']) === false || $_POST['firstName'] === 'Vorname'|| $_POST['firstName'] === '') {
+        array_push($errors, "Bitte tragen Sie Ihren Vornamen ein");
+    }
+    if (!isset($_POST['lastName'])|| $_POST['lastName'] === 'Nachname'|| $_POST['lastName'] === '') {
+        array_push($errors, "Bitte tragen Sie Ihren Nachnamen ein");
+    }
+    if (!isset($_POST['genderRadio'])) {
+        array_push($errors, "Bitte geben Sie Ihr Geschlecht an");
+    }
+    if (!isset($_POST['email']) || $_POST['email'] === 'E-Mail'|| $_POST['email'] === '') {
+        array_push($errors, "Bitte tragen Sie Ihre E-Mail Adresse ein");
+    }
+    if (!isset($_POST['phoneNumber']) || $_POST['phoneNumber'] === 'Telefonnummer'|| $_POST['phoneNumber'] === '') {
+        array_push($errors, "Bitte tragen Sie Ihre E-Mail Adresse ein");
+    }
+    if (!isset($_POST['password'])|| $_POST['password'] === 'Passwort'|| $_POST['password'] === '') {
+        array_push($errors, "Bitte wälen Sie ein Passwort");
+    }
+
+}
 
 /*
 function isPasswordfromUser($password, $email, &$errors, $isEmail=true)
@@ -249,6 +275,7 @@ function getAccountId()
 }
 */
 
+
 function login(&$errors){
 
     $member = Trainingskalender\models\Member::find('email= ' . '\'' . $_POST['email'] . '\'');
@@ -297,7 +324,7 @@ function memberExists(&$errors, $member){
 
 function setIdForCookieOrSession($member){
 
-    if(isset($_POST['rememberMe'])){
+    if(isset($_POST['stayLoggedIn'])){
         stayLoggedIn($member);
     }
     else{
@@ -468,7 +495,7 @@ function setCardioTimes($viewAreaTimeslot, &$cardioStartTime, &$cardioEndTime, &
         getTimeDiffBeforeTraining($value,durationCardio,$viewAreaTimeslot['startTime'] , $cardioStartTime,  $cardioEndTime );
         $trainingEntrysByCardioTime = getTrainingEntrysByCardioTime($viewAreaTimeslot, $cardioStartTime, $cardioEndTime);
     
-        if(arePlacesAvailable($area[0]['maxNumberOfPeople'],$viewAreaTimeslot, $cardioStartTime, $cardioEndTime, $trainingEntrysByCardioTime, $test)){
+        if(arePlacesAvailable($area[0]['maxNumberOfPeople'],$viewAreaTimeslot, $cardioStartTime, $cardioEndTime, $trainingEntrysByCardioTime)){
             return true;
         }
 
@@ -523,7 +550,7 @@ function getTimeDiffBeforeTraining($timediffStartTimeAndTrainingStart,$duration,
     $endTime = $endTime->format('H:i:s');
 }
 
-function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomStartTime, &$changingRoomEndTime, &$changingRoom, &$errors, &$test){
+function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomStartTime, &$changingRoomEndTime, &$changingRoom, &$errors){
     $freePlaces= false;
     $diffTrainingStartChangingBeforeTraining = unserialize (diffTrainingStartChangingBeforeTraining);
     
@@ -533,7 +560,7 @@ function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomSta
         
         
 
-        $freePlaces = setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime, $test);
+        $freePlaces = setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
         if($freePlaces){
             return true;
         }
@@ -541,7 +568,7 @@ function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomSta
         $changingRoom = \Trainingskalender\models\Area
         ::find('labelling = \'Umkleide 2, '.$member['gender'].'\'');
 
-        $freePlaces = setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime, $test);
+        $freePlaces = setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
         if($freePlaces){
             return true;
         }
@@ -554,7 +581,7 @@ function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomSta
         $changingRoom = \Trainingskalender\models\Area
         ::find('labelling = \'Umkleide 2, '.$member['gender'].'\'');
         
-        $freePlaces = setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime, $test);
+        $freePlaces = setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
 
         if($freePlaces){
             return true;
@@ -563,7 +590,7 @@ function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomSta
         $changingRoom = \Trainingskalender\models\Area
         ::find('labelling = \'Umkleide 1, '.$member['gender'].'\'');
         
-        $freePlaces = setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime, $test);
+        $freePlaces = setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $changingRoom[0], $changingRoomStartTime, $changingRoomEndTime);
 
         if($freePlaces){
             return true;
@@ -581,7 +608,7 @@ function setChangingRoomBeforeTimes($viewAreaTimeslot,$member, &$changingRoomSta
 
 function arePlacesAvailable($area,$viewAreaTimeslot, $startTime, $endTime, $trainingEntrys){
     
-    $test = $trainingEntrys;
+  
         if(count($trainingEntrys) < $area){
             return true;
         }
@@ -595,20 +622,20 @@ function arePlacesAvailable($area,$viewAreaTimeslot, $startTime, $endTime, $trai
 
 function getTrainingEntrysBychangingRoom($viewAreaTimeslot, $changingRoomArea, $changingRoomBeforeStartTime, $changingRoomBeforeEndTime){
     // $join, $where, $orderBy, $groupByAndHaving, $limitAndOffset=null
-    $test = \Trainingskalender\models\TrainingEntry
+    $entries = \Trainingskalender\models\TrainingEntry
          ::find('trainingDate = \''.$_POST['trainingDate'].'\' and 	changingRoomBeforeStartTime = \''.$changingRoomBeforeStartTime.'\' and changingRoomBeforeEndTime = \''.$changingRoomBeforeEndTime.'\' and changingRoom = \''.$changingRoomArea.'\'');
-         return $test;
+         return $entries;
  }
 
 
-function setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $area, &$changingRoomStartTime, &$changingRoomEndTime, &$test){
+function setTimesChangingRoomBeforeByArea($diffTrainingStartChangingBeforeTraining, $viewAreaTimeslot, $area, &$changingRoomStartTime, &$changingRoomEndTime){
     foreach ($diffTrainingStartChangingBeforeTraining as $value){
 
         getTimeDiffBeforeTraining($value,durationChangingBefore,$viewAreaTimeslot['startTime'] , $changingRoomStartTime,  $changingRoomEndTime );
         
         $trainingEntrysByChangingRoom = getTrainingEntrysBychangingRoom($viewAreaTimeslot, $area['labelling'], $changingRoomStartTime, $changingRoomEndTime);
         
-      if( arePlacesAvailable($area['maxNumberOfPeople'],$viewAreaTimeslot, $changingRoomStartTime, $changingRoomEndTime, $trainingEntrysByChangingRoom, $test)){
+      if( arePlacesAvailable($area['maxNumberOfPeople'],$viewAreaTimeslot, $changingRoomStartTime, $changingRoomEndTime, $trainingEntrysByChangingRoom)){
           return true;
       }
     
@@ -713,7 +740,7 @@ function getTrainingDateClass(){
 
 function getTrainingEntrysByChangingRoomAfter($viewAreaTimeslot, $changingRoomArea, $changingRoomBeforeStartTime, $changingRoomBeforeEndTime){
     // $join, $where, $orderBy, $groupByAndHaving, $limitAndOffset=null
-    $test = \Trainingskalender\models\TrainingEntry
+    $entries = \Trainingskalender\models\TrainingEntry
          ::find('trainingDate = \''.$_POST['trainingDate'].'\' and 	changingRoomAfterStartTime = \''.$changingRoomBeforeStartTime.'\' and changingRoomAfterEndTime = \''.$changingRoomBeforeEndTime.'\' and changingRoom = \''.$changingRoomArea.'\'');
-         return $test;
+         return $entries;
  }

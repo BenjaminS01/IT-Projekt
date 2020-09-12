@@ -1,6 +1,6 @@
 <div class="chooseTypeOfTraining ">
 <div class="container ">
-<h3 >Bitte wälen Sie einen Trainingstyp</h3>
+<h1 >Bitte wälen Sie einen Trainingstyp</h1>
  
     <form method="get"  class="needs-validation" novalidate>
       <div class="form-group">
