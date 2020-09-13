@@ -703,6 +703,24 @@ function setTimesChangingRoomAfterByArea($diffTrainingStartChangingBeforeTrainin
 
 function trainingEntry( &$errors){
    
+    if(isset($_SESSION['entryId'])){
+        $trainingEntry = [
+            'id' => $_SESSION['entryId'],
+            'trainingDate' => $_POST['trainingDate'],
+            'typeOfTraining' => $_POST['typeOfTraining'],
+            'changingRoom' => $_POST['changingRoom'],
+            'changingRoomBeforeStartTime' => $_POST['changingRoomBeforeStartTime'],
+            'changingRoomBeforeEndTime' => $_POST['changingRoomBeforeEndTime'],
+            'changingRoomAfterStartTime' => $_POST['changingRoomAfterStartTime'],
+            'changingRoomAfterEndTime' => $_POST['changingRoomAfterEndTime'],
+            'cardioStartTime' => $_POST['cardioStartTime'],
+            'cardioEndTime' => $_POST['cardioEndTime'],
+            'memberId' => $_POST['memberId'],
+            'areaTimeslotId' => $_POST['areaTimeslotId']
+            ];
+    }else{
+
+    
     $trainingEntry = [
         'trainingDate' => $_POST['trainingDate'],
         'typeOfTraining' => $_POST['typeOfTraining'],
@@ -716,7 +734,7 @@ function trainingEntry( &$errors){
         'memberId' => $_POST['memberId'],
         'areaTimeslotId' => $_POST['areaTimeslotId']
         ];
-
+    }
     
         $trainingEntry = new \Trainingskalender\models\TrainingEntry($trainingEntry);
     
@@ -734,8 +752,8 @@ function subOneMonth(){
     return $date->format('Y-m-d');
 }
 
-function getTrainingDateClass(){
-    return new DateTime($_GET['trainingDate']);
+function getTrainingDateClass($date){
+    return new DateTime($date);
 }
 
 function getTrainingEntrysByChangingRoomAfter($viewAreaTimeslot, $changingRoomArea, $changingRoomBeforeStartTime, $changingRoomBeforeEndTime){
@@ -745,8 +763,9 @@ function getTrainingEntrysByChangingRoomAfter($viewAreaTimeslot, $changingRoomAr
          return $entries;
  }
 
- function deleteEntry(&$errors, $entry, $view){
+ function deleteEntry(&$errors, $entry){
     $trainingEntry = [
+        'id' => $entry['id'],
         'trainingDate' => $entry['trainingDate'],
         'typeOfTraining' => $entry['typeOfTraining'],
         'changingRoom' => $entry['changingRoom'],

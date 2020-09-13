@@ -47,7 +47,7 @@
       <input type="hidden" id="trainingType2" name="cardioStartTime" value="<?= $this->_params['cardioStartTime']?>">
       <input type="hidden" id="trainingType2" name="cardioEndTime" value="<?= $this->_params['cardioEndTime']?>">
       <input type="hidden" id="trainingType2" name="memberId" value="<?= $this->_params['memberId']?>">
-      <input type="hidden" id="trainingType2" name="areaTimeslotId" value="<?= $this->_params['viewAreaTimeslot'][0]['id']?>">   
+      <input type="hidden" id="trainingType2" name="areaTimeslotId" value="<?= $this->_params['viewAreaTimeslot'][0]['id']?>">    
 
   <button type="submit" name="submitTrainingEntry" class="btn btn-success" >Eintrag bestätigen</button>
 </form>

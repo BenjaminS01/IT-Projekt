@@ -66,7 +66,7 @@ function Kalender(Monat, Jahr, KalenderId) {
                 // normale Zellen werden mit der Tageszahl befüllt und mit der Klasse Kalendertag markiert
                 if (Tageszahl >= DieserTag){ 
 
-                    cell.innerHTML = '<div style = " margin-top:10px; font-weight: bold; height: 100px;width:100px"><a href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '" > <i class="fa fa-edit" style="font-size:18px"><p style=" float:right">' +Tageszahl  +'</p></i></a><br><br><br><a href="?a=yourTrainingDay&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '"><i  id="i_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" style=" color: rgb(101, 248, 113); ; display:none; font-size:16px" class="fas">&#xf44b;</i></a></div>';
+                    cell.innerHTML = '<div style = " margin-top:10px; font-weight: bold; height: 100px;width:100px"><a href="?a=chooseTypeOfTraining&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '&type=1" > <i class="fa fa-edit" style="font-size:18px"><p style=" float:right">' +Tageszahl  +'</p></i></a><br><br><br><a href="?a=yourTrainingDay&trainingDate=' + Jahr + '-' + neuMonat + '-' + neueTagesZahl + '"><i  id="i_'+Jahr + '-' + neuMonat + '-' + neueTagesZahl+'" style=" color: rgb(101, 248, 113); ; display:none; font-size:16px" class="fas">&#xf44b;</i></a></div>';
 
                 }
                 else{   

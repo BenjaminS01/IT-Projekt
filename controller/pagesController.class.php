@@ -24,7 +24,13 @@ class PagesController extends \Trainingskalender\core\Controller
             trainingEntry($errors);
             if(!empty($errors)){
                 var_dump($errors);
-           header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_GET['typeOfTraining'].'&trainingDate='.$_GET['trainingDate'].'&f='.$errors[0]);
+                header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_GET['typeOfTraining'].'&trainingDate='.$_GET['trainingDate'].'&f='.$errors[0]);
+            }else if(isset($_SESSION['entryId'])){
+                $_SESSION['entryId'] = null;
+                $this->_params['message'] = 'Ihr eintrag wurde erfolgreich geändert. Wir wünschen Ihnen ein erfolgreiches Training';
+            }else{
+                $_SESSION['entryId'] = null;
+                $this->_params['message'] = 'Ihr eintrag wurde vom System erfasst. Wir wünschen Ihnen ein erfolgreiches Training';
             }
         }
 
@@ -152,11 +158,26 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionChooseTypeOfTraining(){
+        if(isset($_GET['type'])){
+            $_SESSION['entryId'] = null;
 
-        $this->_params['date'] = getTrainingDateClass();
-       
-    
+        }
+        
+
+        if(isset($_GET['trainingDate'])){
+
+            $this->_params['date'] = getTrainingDateClass($_GET['trainingDate']);
+            $this->_params['trainingDate'] = $_GET['trainingDate'];
+        }
+        else if(isset($_POST['id'])){
+            $this->_params['date'] = getTrainingDateClass($_POST['trainingDate']);
+            $this->_params['trainingDate'] = $_POST['trainingDate'];
+            $_SESSION['entryId'] = $_POST['id'];
  
+        }
+
+        var_dump($_SESSION['entryId']);
+
   
     }
 
@@ -219,7 +240,7 @@ class PagesController extends \Trainingskalender\core\Controller
         $test = setCardioTimes($this->_params['viewAreaTimeslot'][0], $this->_params['cardioStartTime'], $this->_params['cardioEndTime'], $errors );
 
         if($test===false){
-            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate']);
+            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f='.$test);
         }
 
         $this->_params['memberId'] = getMemberId();
@@ -236,13 +257,13 @@ class PagesController extends \Trainingskalender\core\Controller
         $test = setChangingRoomBeforeTimes($this->_params['viewAreaTimeslot'][0], $member[0], $this->_params['changingRoomBeforeStartTime'], $this->_params['changingRoomBeforeEndTime'],  $this->_params['changingRoom'], $errors );
 
         if($test===false){
-            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate']);
+            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=tesst');
         }
 
         $test = setChangingRoomAfterTimes($this->_params['viewAreaTimeslot'][0], $member[0], $this->_params['changingRoomAfterStartTime'], $this->_params['changingRoomAfterEndTime'],  $this->_params['changingRoom'], $errors );
 
         if($test===false){
-            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate']);
+            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=');
         }
 
         $this->_params['trainingDate'] = $_POST['trainingDate'];
@@ -278,8 +299,20 @@ class PagesController extends \Trainingskalender\core\Controller
 
         $member = getMemberId();
 
+         $_SESSION['entryId'] = null;
+ 
+        if(isset($_GET['trainingDate'])){
+
         $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
         ::find('memberId= \''.$member.'\' and trainingDate =\''.$_GET['trainingDate'].'\'');
+
+        }
+        else if(isset($_POST['trainingDate'])){
+
+            $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
+            ::find('memberId= \''.$member.'\' and trainingDate =\''.$_POST['trainingDate'].'\'');
+        }
+
 
     }
 
@@ -305,22 +338,25 @@ class PagesController extends \Trainingskalender\core\Controller
 
         $member = getMemberId();
 
-        echo $_GET['value'];
+       echo $_POST['id'];
 
         $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
-        ::find('memberId= \''.$member.'\' and id =\''.$_GET['value'].'\'');
+        ::find('memberId= \''.$member.'\' and id =\''.$_POST['id'].'\'');
 
         $view =  \Trainingskalender\models\ViewAreaTimeslot
         ::find('id = \''.$this->_params['trainingEntry'][0]['areaTimeslotId'].'\'');
+
+        var_dump($this->_params['trainingEntry'][0]);
 
         if(isset($_POST['submitDelete'])){
 
             deleteEntry($errors, $this->_params['trainingEntry'][0]);
 
             if(count($errors) === 0){
-                header('Location: index.php?c=pages&a=trainingDay&trainingDate='.$_GET['trainingDate']);
+                header('Location: index.php?c=pages&a=yourTrainingDay&trainingDate='.$_POST['trainingDate'].'&message='.'Ihr Trainingseintrag wurde erfolgreich gelöscht');
             }
         }
+        var_dump($errors);
 
     }
 }

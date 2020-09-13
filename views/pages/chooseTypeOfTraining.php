@@ -9,17 +9,17 @@
       <label style="margin-right:20px;"  for="tel">Trainingsart:</label>
       
       <?php
-                if($this->_params['date']->format('N')!= 6 && $this->_params['date']->format('N') != 7) {
-                      include 'views/noWeekend.php';
-                }
-            ?>     
+          if($this->_params['date']->format('N')!= 6 && $this->_params['date']->format('N') != 7) {
+              include 'views/noWeekend.php';
+          }
+      ?>     
 
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="typeOfTraining" id="typeOfTraining2" value="Training"
         <?= isset($_GET['typeOfTraining']) ? ($_GET['typeOfTraining'] === 'Training' ? "checked" : '') : '' ?>>
         <label class="form-check-label" for="inlineRadio2">Einzeltraining</label>
       </div>
-      <input type="hidden" id="trainingDate2" name="trainingDate" value="<?= $_GET['trainingDate']?>">
+      <input type="hidden" id="trainingDate2" name="trainingDate" value="<?= $this->_params['trainingDate']?>">
       </div>
       <button type="submit"  class="btn btn-success">weiter</button>
     </form>

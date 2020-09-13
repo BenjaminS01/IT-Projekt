@@ -42,6 +42,15 @@
             }
             
         }
+        else if(isset($_GET['message'])){
+            echo nl2br('<div class="alert alert-success" role="alert">'. $_GET['message'].'</div>' . "\r\n");
+        }
+        else if(isset($_POST['message'])){
+            echo nl2br('<div class="alert alert-success" role="alert">'. $_POST['message'].'</div>' . "\r\n");
+        }
+        else if(isset($this->_params['message'])){
+            echo nl2br('<div class="alert alert-success" role="alert">'. $this->_params['message'].'</div>' . "\r\n");
+        }
     ?>
 
 

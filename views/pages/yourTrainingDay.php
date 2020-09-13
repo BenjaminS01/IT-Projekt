@@ -43,23 +43,19 @@
 </div>
 <div class="container">
           <div class="box1">
-            <form action="">
-            <input type="hidden"  name="c" value="pages">
-      <input type="hidden"  name="a" value="editPersonalData">
-                  <button type="submit" class="btn btn-warning">Trainingseintrag ändern</button>
-                </form>
-                </div>
+            <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=chooseTypeOfTraining'; ?>">
+              <input type="hidden"  name="id" value="<?= $value['id']?>">
+              <input type="hidden"  name="trainingDate" value="<?= $_GET['trainingDate']?>">
+              <button type="submit" class="btn btn-warning">Trainingseintrag ändern</button>
+            </form>
+          </div>
                      
-            <div class="box">
-            <form action="">
-            <input type="hidden"  name="c" value="pages">
-            <input type="hidden"  name="a" value="deleteEntry">
-            <input type="hidden"  name="value" value="<?= $value['id']?>">
-
-                  <button type="submit" class="btn btn-danger">Trainingseintrag löschen</button>
-                </form>
-              </div>
-            
+          <div class="box">
+            <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=deleteEntry'; ?>">
+              <input type="hidden"  name="id" value="<?= $value['id']?>">
+              <button type="submit" class="btn btn-danger">Trainingseintrag löschen</button>
+            </form>
+          </div>  
   </div>
   <?php endforeach; ?>
   </div>
