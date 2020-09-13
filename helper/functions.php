@@ -744,3 +744,26 @@ function getTrainingEntrysByChangingRoomAfter($viewAreaTimeslot, $changingRoomAr
          ::find('trainingDate = \''.$_POST['trainingDate'].'\' and 	changingRoomAfterStartTime = \''.$changingRoomBeforeStartTime.'\' and changingRoomAfterEndTime = \''.$changingRoomBeforeEndTime.'\' and changingRoom = \''.$changingRoomArea.'\'');
          return $entries;
  }
+
+ function deleteEntry(&$errors, $entry, $view){
+    $trainingEntry = [
+        'trainingDate' => $entry['trainingDate'],
+        'typeOfTraining' => $entry['typeOfTraining'],
+        'changingRoom' => $entry['changingRoom'],
+        'changingRoomBeforeStartTime' => $entry['changingRoomBeforeStartTime'],
+        'changingRoomBeforeEndTime' => $entry['changingRoomBeforeEndTime'],
+        'changingRoomAfterStartTime' => $entry['changingRoomAfterStartTime'],
+        'changingRoomAfterEndTime' => $entry['changingRoomAfterEndTime'],
+        'cardioStartTime' => $entry['cardioStartTime'],
+        'cardioEndTime' => $entry['cardioEndTime'],
+        'memberId' => $entry['memberId'],
+        'areaTimeslotId' => $entry['areaTimeslotId']
+        ];
+
+    
+        $trainingEntry = new \Trainingskalender\models\TrainingEntry($trainingEntry);
+    
+
+        $trainingEntry->delete($errors);
+
+ }

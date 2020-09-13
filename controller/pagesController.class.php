@@ -298,4 +298,29 @@ class PagesController extends \Trainingskalender\core\Controller
         $times = [];
         $this->_params['weekdays'] = array('Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag');
     }
+
+    public function actionDeleteEntry(){
+
+        $errors = [];
+
+        $member = getMemberId();
+
+        echo $_GET['value'];
+
+        $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
+        ::find('memberId= \''.$member.'\' and id =\''.$_GET['value'].'\'');
+
+        $view =  \Trainingskalender\models\ViewAreaTimeslot
+        ::find('id = \''.$this->_params['trainingEntry'][0]['areaTimeslotId'].'\'');
+
+        if(isset($_POST['submitDelete'])){
+
+            deleteEntry($errors, $this->_params['trainingEntry'][0]);
+
+            if(count($errors) === 0){
+                header('Location: index.php?c=pages&a=trainingDay&trainingDate='.$_GET['trainingDate']);
+            }
+        }
+
+    }
 }

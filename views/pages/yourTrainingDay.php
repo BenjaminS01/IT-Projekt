@@ -53,7 +53,9 @@
             <div class="box">
             <form action="">
             <input type="hidden"  name="c" value="pages">
-      <input type="hidden"  name="a" value="editPassword">
+            <input type="hidden"  name="a" value="deleteEntry">
+            <input type="hidden"  name="value" value="<?= $value['id']?>">
+
                   <button type="submit" class="btn btn-danger">Trainingseintrag löschen</button>
                 </form>
               </div>
