@@ -130,25 +130,41 @@ class PagesController extends \Trainingskalender\core\Controller
         $errors = [];
         $memberId = getMemberId();
         $_SESSION['trainingDate'] = null;
+
+        $nxtm = strtotime("next month");
+        $this->_params['month'] = date("n", $nxtm);
+
+        if(!isset($_GET['nextMonth'])){
        
         $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
         and month(curdate()) = month(TrainingDate)');
         $query1->execute();
         $this->_params['trainingEntry'] = $query1->fetchall();
+        }else if(isset($_GET['nextMonth']) && $this->_params['month'] < 12 ){
+            $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
+        and month(DATE_ADD(curdate(), INTERVAL 1 MONTH)) = month(TrainingDate)');
+        $query1->execute();
+        $this->_params['trainingEntry'] = $query1->fetchall();
+        }else {
+            $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(DATE_ADD(curdate(), INTERVAL 1 YEAR)) = year(trainingDate)
+        and month(DATE_ADD(curdate(), INTERVAL 1 MONTH)) = month(TrainingDate)');
+        $query1->execute();
+        $this->_params['trainingEntry'] = $query1->fetchall();
+        }
 /*
        $this->_params['trainingEntry'] = \Trainingskalender\models\TrainingEntry::find('memberId= ' . '\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
        and month(curdate()) = month(TrainingDate)');
 */
-        /*if(...)
-        $nxtm = strtotime("next month");
-        $this->$_params['month'] = date("F", $nxtm);
-        */
-        $this->_params['month'] = date("F");
-       
+      
+     
+   
         
+var_dump(       $this->_params['trainingEntry']);
 
+        echo $this->_params['month'];
 
-
+        
+        
         /////test
         	foreach ($this->_params['trainingEntry'] as $key => $value){
                 $this->_params['events'][$this->_params['trainingEntry'][$key]['trainingDate']] = $this->_params['trainingEntry'][$key];
@@ -235,6 +251,12 @@ class PagesController extends \Trainingskalender\core\Controller
         $this->_params['cardioStartTime'] = '';
         $this->_params['cardioEndTime'] = '';
         
+
+        $test = isEntryUnique();
+
+        if($test===false){
+            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=sadsadsad');
+        }
     
     
         $test = setCardioTimes($this->_params['viewAreaTimeslot'][0], $this->_params['cardioStartTime'], $this->_params['cardioEndTime'], $errors );
@@ -262,9 +284,12 @@ class PagesController extends \Trainingskalender\core\Controller
 
         $test = setChangingRoomAfterTimes($this->_params['viewAreaTimeslot'][0], $member[0], $this->_params['changingRoomAfterStartTime'], $this->_params['changingRoomAfterEndTime'],  $this->_params['changingRoom'], $errors );
 
+
         if($test===false){
             header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=');
         }
+
+
 
         $this->_params['trainingDate'] = $_POST['trainingDate'];
         $this->_params['typeOfTraining'] = $_POST['typeOfTraining'];

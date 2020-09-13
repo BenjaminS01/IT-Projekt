@@ -19,7 +19,7 @@
     $db = $GLOBALS['db'];
     $memberId = getMemberId();
 
-    $query = $db->prepare("SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId = ".$memberId. " ORDER BY TrainingDate DESC LIMIT 10");
+    $query = $db->prepare("SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId = ".$memberId. " ORDER BY TrainingDate DESC LIMIT 30");
     $query->execute();
     $result = $query->fetchall();
 

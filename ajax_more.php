@@ -15,7 +15,7 @@ if(!empty($_POST["id"])){
     $result = $query->fetchall();
     $totalRowCount = count($result);
     
-    $showLimit = 10;
+    $showLimit = 30;
     
   
     // Get records from the database

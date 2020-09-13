@@ -471,6 +471,49 @@ function random_number() {
 	return (rand() % 7);
 }
 
+function isEntryUnique(){
+    $memberId = getMemberId();
+
+    $entries = null;
+
+    $test = true;
+
+    if(isset($_POST['trainingTime'])){
+    $view =  \Trainingskalender\models\ViewAreaTimeslot
+    ::find('startTime =\''.$_POST['trainingTime'].'\'');
+    
+    foreach ($view as $value){
+    $entries = \Trainingskalender\models\TrainingEntry
+        ::find('trainingDate = \''.$_POST['trainingDate'].'\' and memberId = \''.$memberId.'\' and areaTimeslotId  = \''.$value['id'].'\'');
+
+        if(count($entries) !== 0){
+            $test = false;
+        }
+        return $test;
+    }
+
+    } else if(isset($_POST['viewAreaTimeslotId'])){
+
+    $entries = \Trainingskalender\models\TrainingEntry
+        ::find('trainingDate = \''.$_POST['trainingDate'].'\' and memberId = \''.$memberId.'\' and areaTimeslotId  = \''.$_POST['viewAreaTimeslotId'].'\'');
+    }
+
+
+    if(count($entries) !== 0){
+        $test = false;
+    }
+
+    return $test;
+}
+
+function requiredCheckTrainingType(&$errors){
+    if (!isset($_GET['typeOfTraining'])) {
+        array_push($errors, "Bitte wählen Sie einen Trainingstyp");
+    }
+}
+
+
+
 
 
 /////////////***********KALENDER EINTRAGEN */////////////
