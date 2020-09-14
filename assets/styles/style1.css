@@ -67,6 +67,11 @@
         max-width: 600px;
     }
     
+    .kalenderButton {
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+    
     @media (max-width: 767px)
     /* @grid-float-breakpoint -1 */
     

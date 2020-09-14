@@ -785,6 +785,73 @@ function trainingEntry( &$errors){
         $trainingEntry->save($errors);
 
         
+
+
+
+
+/////////////////////////
+
+/*
+    $id = 'NULL';
+ 
+    if(isset($_SESSION['entryId'])){
+        
+            $id = $_SESSION['entryId'];
+            $trainingDate = $_POST['trainingDate'];
+            $typeOfTraining = $_POST['typeOfTraining'];
+            $changingRoom = $_POST['changingRoom'];
+            $changingRoomBeforeStartTime = $_POST['changingRoomBeforeStartTime'];
+            $changingRoomBeforeEndTime = $_POST['changingRoomBeforeEndTime'];
+            $changingRoomAfterStartTime = $_POST['changingRoomAfterStartTime'];
+            $changingRoomAfterEndTime = $_POST['changingRoomAfterEndTime'];
+            $cardioStartTime = $_POST['cardioStartTime'];
+            $cardioEndTime = $_POST['cardioEndTime'];
+            $memberId = $_POST['memberId'];
+            $areaTimeslotId = $_POST['areaTimeslotId'];
+            
+    }else{
+
+    
+    
+        $trainingDate = $_POST['trainingDate'];
+        $typeOfTraining = $_POST['typeOfTraining'];
+        $changingRoom = $_POST['changingRoom'];
+        $changingRoomBeforeStartTime = $_POST['changingRoomBeforeStartTime'];
+        $changingRoomBeforeEndTime = $_POST['changingRoomBeforeEndTime'];
+        $changingRoomAfterStartTime = $_POST['changingRoomAfterStartTime'];
+        $changingRoomAfterEndTime = $_POST['changingRoomAfterEndTime'];
+        $cardioStartTime = $_POST['cardioStartTime'];
+        $cardioEndTime = $_POST['cardioEndTime'];
+        $memberId = $_POST['memberId'];
+        $areaTimeslotId = $_POST['areaTimeslotId'];
+        
+    }
+    
+       // $trainingEntry = new \Trainingskalender\models\TrainingEntry($trainingEntry);
+    
+
+       // $trainingEntry->save($errors);
+       $changingRoomdB = \Trainingskalender\models\Area
+       ::find('labelling = \''.$changingRoom.'\'');
+
+
+       $db = $GLOBALS['db'];
+
+        $query = $db->prepare('INSERT INTO `trainingentry` (`id`, `trainingDate`, `typeOfTraining`, `changingRoom`, `changingRoomBeforeStartTime`, `changingRoomBeforeEndTime`, `changingRoomAfterStartTime`, `changingRoomAfterEndTime`, `cardioStartTime`, `cardioEndTime`, `memberId`, `areaTimeslotId`) SELECT * FROM (SELECT "'.$id.'", "'.$trainingDate.'", "'.$typeOfTraining.'", "'.$changingRoom.'", "'.$changingRoomBeforeStartTime.'", "'.$changingRoomBeforeStartTime.'", "'.$changingRoomAfterStartTime.'", "'.$changingRoomAfterEndTime.'", "'.$cardioStartTime.'", "'.$cardioEndTime.'", "'.$memberId.'", "'.$areaTimeslotId.'") 
+         WHERE (
+            SELECT 
+            from `trainingentry`
+            WHERE (Select COUNT(*) from trainingentry where trainingDate = "'.$trainingDate.'" and changingRoom ="'.$changingRoom.'" and changingRoomBeforeStartTime = "'.$changingRoomBeforeStartTime.'") < '.$changingRoomdB[0]['maxNumberOfPeople'].' 
+           
+        )  ;');
+
+      //  and............
+      //  and  typeOfTraining = "'.$typeOfTraining.'" and  changingRoomBeforeStartTime = "' .$changingRoomBeforeStartTime.'" and changinRoomBeforeEndTime = "'.$changingRoomBeforeEndTime.'" and changingRoomAfterStartTime = "'.$changingRoomAfterStartTime.'" and changingRoomAfterEndTime = "'.$changingRoomAfterEndTime.'" and CardioStartTime = "'.$cardioStartTime.'" and cardioEndTime = "'.$cardioEndTime.'" and memberId = "'.$memberId.'" and areaTimeslotId = "'.$areaTimeslotId.'"
+
+        $query->execute();
+
+        */
+        
 }
 
 function subOneMonth(){
@@ -829,3 +896,29 @@ function getTrainingEntrysByChangingRoomAfter($viewAreaTimeslot, $changingRoomAr
         $trainingEntry->delete($errors);
 
  }
+ function dateInRightOrder($_date){
+    if (!empty($_date)) {
+
+        $date = explode("-", $_date);
+        $newDate = $date[2] . '.' . $date[1] . '.' . $date[0];
+        return $newDate;
+    } else {
+        return '';
+    }
+}
+
+function timeInRightOrder($_time, $Uhr=false){
+    if (!empty($_time)) {
+
+        $time = explode(":", $_time);
+        if($Uhr){
+
+            $newTime = $time[0] . ':' . $time[1].' Uhr';
+        }else{
+            $newTime = $time[0] . ':' . $time[1];
+        }
+        return $newTime;
+    } else {
+        return '';
+    }
+}

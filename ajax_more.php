@@ -31,7 +31,7 @@ if(!empty($_POST["id"])){
     <div class="list_item">
         <div class="container">
             <div class="row">
-            <div class="col-sm"><p><?php echo $row['trainingDate']?> </p></div>
+            <div class="col-sm"><p><?php echo dateInRightOrder($row['trainingDate'])?> </p></div>
             <div class="col-sm">
             <form method="get"  class="needs-validation" novalidate>
             <div class="form-group">

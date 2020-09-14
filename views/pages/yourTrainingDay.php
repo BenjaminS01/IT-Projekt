@@ -1,5 +1,5 @@
 <div class="container">
-<h1>Deine Trainingszeiten für den <?=$_GET['trainingDate']?></h1>
+<h1>Deine Trainingszeiten für den <?=dateInRightOrder($_GET['trainingDate'])?></h1>
 <div class="trainingDay">
 
   <?php foreach ($this->_params['trainingEntry'] as $value): ?>
@@ -8,7 +8,7 @@
         ?>
         
 <div class="container">
-<h3><?=$view[0]['course'].', '.$view[0]['startTime'].'-'.$view[0]['endTime']?></h3>
+<h3><?=$view[0]['course'].', '.timeInRightOrder($view[0]['startTime']).'-'.timeInRightOrder($view[0]['endTime'],true)?></h3>
   <table class="table table-bordered">
     <thead >
       <tr>
@@ -21,22 +21,22 @@
       <tr>
         <td>Umkleide vor dem Training</td>
         <td><?= $value['changingRoom']?></td>
-        <td><?= $value['changingRoomBeforeStartTime'].'-'.$value['changingRoomBeforeEndTime']?></td>
+        <td><?= timeInRightOrder($value['changingRoomBeforeStartTime']).'-'.timeInRightOrder($value['changingRoomBeforeEndTime'],true)?></td>
       </tr>
       <tr>
         <td>Erwärmung</td>
         <td>Cardiogeräte</td>
-        <td><?= $value['cardioStartTime'].'-'.$value['cardioEndTime']?></td>
+        <td><?= timeInRightOrder($value['cardioStartTime']).'-'.timeInRightOrder($value['cardioEndTime'],true)?></td>
       </tr>
       <tr>
         <td><?=$view[0]['course']?></td>
         <td><?=$view[0]['labelling']?></td>
-        <td><?= $view[0]['startTime'].'-'.$view[0]['endTime']?></td>
+        <td><?= timeInRightOrder($view[0]['startTime']).'-'.timeInRightOrder($view[0]['endTime'],true)?></td>
       </tr>
       <tr>
         <td>Umkleide nach dem Training</td>
         <td><?= $value['changingRoom']?></td>
-        <td><?= $value['changingRoomAfterStartTime'].'-'.$value['changingRoomAfterEndTime']?></td>
+        <td><?= timeInRightOrder($value['changingRoomAfterStartTime']).'-'.timeInRightOrder($value['changingRoomAfterEndTime'],true)?></td>
       </tr>
     </tbody>
   </table>  
@@ -45,7 +45,7 @@
           <div class="box1">
             <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=chooseTypeOfTraining'; ?>">
               <input type="hidden"  name="id" value="<?= $value['id']?>">
-              <input type="hidden"  name="trainingDate" value="<?= $_GET['trainingDate']?>">
+              <input type="hidden"  name="trainingDate" value="<?=dateInRightOrder( $_GET['trainingDate'])?>">
               <button type="submit" class="btn btn-warning">Trainingseintrag ändern</button>
             </form>
           </div>

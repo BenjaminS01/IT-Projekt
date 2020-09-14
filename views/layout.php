@@ -50,6 +50,8 @@
         }
         else if(isset($this->_params['message'])){
             echo nl2br('<div class="alert alert-success" role="alert">'. $this->_params['message'].'</div>' . "\r\n");
+        }else if(isset($_GET['noType'])){
+            echo nl2br('<div class="alert alert-danger role="alert">Bitte Wählen Sie einen Trainingstyp</div>' . "\r\n");
         }
     ?>
 

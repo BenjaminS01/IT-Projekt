@@ -159,9 +159,7 @@ class PagesController extends \Trainingskalender\core\Controller
      
    
         
-var_dump(       $this->_params['trainingEntry']);
 
-        echo $this->_params['month'];
 
         
         
@@ -192,8 +190,6 @@ var_dump(       $this->_params['trainingEntry']);
  
         }
 
-        var_dump($_SESSION['entryId']);
-
   
     }
 
@@ -203,6 +199,10 @@ var_dump(       $this->_params['trainingEntry']);
         if(isset($_GET['f'])){
             array_push($this->_params['error'], $_GET['f']);
             //$this->_params['error'] = $_GET['f'];
+        }
+
+        if(!isset($_GET['typeOfTraining'])){
+            header('Location: index.php?c=pages&a=chooseTypeOfTraining&trainingDate='.$_GET['trainingDate'].'&noType=true');
         }
 
 
@@ -363,15 +363,11 @@ var_dump(       $this->_params['trainingEntry']);
 
         $member = getMemberId();
 
-       echo $_POST['id'];
-
         $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
         ::find('memberId= \''.$member.'\' and id =\''.$_POST['id'].'\'');
 
         $view =  \Trainingskalender\models\ViewAreaTimeslot
         ::find('id = \''.$this->_params['trainingEntry'][0]['areaTimeslotId'].'\'');
-
-        var_dump($this->_params['trainingEntry'][0]);
 
         if(isset($_POST['submitDelete'])){
 
@@ -381,7 +377,6 @@ var_dump(       $this->_params['trainingEntry']);
                 header('Location: index.php?c=pages&a=yourTrainingDay&trainingDate='.$_POST['trainingDate'].'&message='.'Ihr Trainingseintrag wurde erfolgreich gelöscht');
             }
         }
-        var_dump($errors);
 
     }
 }

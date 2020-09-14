@@ -1,23 +1,29 @@
+<div class ="container">
+
 <h1>Monatskalender</h1>
-<main>
+
     <table class="k" id="kalender"> </table>
     <?php if (!isset($_GET['nextMonth'])) : ?>
-    <form amethod="get">
+    <form method="get">
     <input type="hidden"  name="c" value="pages">
       <input type="hidden"  name="a" value="kalender">
       <input type="hidden"  name="nextMonth" value="true">
-    <button type="submit" style="float:right;" name="next" class="btn btn-primary">nächster Monat</button>
+      <div class= "kalenderButton">
+        <button type="submit"  name="next" class="btn btn-info">nächster Monat</button>
+      </div>
     </form>
     <?php else: ?>
 
-    <form amethod="get">
+    <form method="get">
 
     <input type="hidden"  name="c" value="pages">
       <input type="hidden"  name="a" value="kalender">
-    <button type="submit" style="float:right;" name="next" class="btn btn-primary">letzter Monat</button>
+      <div class= "kalenderButton">
+        <button type="submit"  name="next" class="btn btn-info">zurück</button>
+      </div>
     </form>
     <?php endif; ?>
-</main>
+    </div>
 <script src="assets/js/kalenderCall.js"></script>
 <?php if (!isset($_GET['nextMonth'])) : ?>
 <script src="assets/js/kalender.js"></script>

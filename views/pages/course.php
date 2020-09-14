@@ -1,7 +1,7 @@
-<h1>Kursplanung</h1>
-
 <div class="course">
 <div class="container">
+<h1>Kursplanung</h1>
+
 <h3>Montag</h3>
 <table class="table table-bordered">
   <tr>
@@ -11,7 +11,7 @@
       </tr>
   <?php foreach ($this->_params['Montag'] as $value): ?>
   <tr>
-    <td ><?=$value['startTime'].'-'.$value['endTime']?></td>
+    <td ><?=timeInRightOrder($value['startTime']).'-'.timeInRightOrder($value['endTime'], true)?></td>
     <td ><?=$value['labelling']?></td>
     <td ><?=$value['course']?></td>
   </tr>
@@ -29,7 +29,7 @@
 </tr>
   <?php foreach ($this->_params['Dienstag'] as $value): ?>
   <tr>
-    <td ><?=$value['startTime'].'-'.$value['endTime']?></td>
+    <td ><?=timeInRightOrder($value['startTime']).'-'.timeInRightOrder($value['endTime'],true)?></td>
     <td ><?=$value['labelling']?></td>
     <td ><?=$value['course']?></td>
   </tr>
@@ -47,7 +47,7 @@
 </tr>
   <?php foreach ($this->_params['Mittwoch'] as $value): ?>
   <tr>
-    <td ><?=$value['startTime'].'-'.$value['endTime']?></td>
+    <td ><?=timeInRightOrder($value['startTime']).'-'.timeInRightOrder($value['endTime'],true)?></td>
     <td ><?=$value['labelling']?></td>
     <td ><?=$value['course']?></td>
   </tr>
@@ -64,7 +64,7 @@
 </tr>
   <?php foreach ($this->_params['Donnerstag'] as $value): ?>
   <tr>
-    <td><?=$value['startTime'].'-'.$value['endTime']?></td>
+    <td><?=timeInRightOrder($value['startTime']).'-'.timeInRightOrder($value['endTime'],true)?></td>
     <td><?=$value['labelling']?></td>
     <td><?=$value['course']?></td>
   </tr>
@@ -82,7 +82,7 @@
 </tr>
   <?php foreach ($this->_params['Freitag'] as $value): ?>
   <tr>
-    <td ><?=$value['startTime'].'-'.$value['endTime']?></td>
+    <td ><?=timeInRightOrder($value['startTime']).'-'.timeInRightOrder($value['endTime'],true)?></td>
     <td ><?=$value['labelling']?></td>
     <td ><?=$value['course']?></td>
   </tr>
