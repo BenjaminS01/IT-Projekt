@@ -1,17 +1,17 @@
 
 
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (1,'Trainingsraum1',20);
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (2,'Trainingsraum2',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (1,'Trainingsraum 1',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (2,'Trainingsraum 2',20);
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (3,'Kursraum 1',20);
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (4,'Kursraum 2',20);
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (5,'Cardio',10);
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (6,'Umkleide 1, Herren',20);
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (7,'Umkleide 2, Herren',20);
 INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (8,'Umkleide 1, Damen',20);
-INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (9'Umkleide 2, Damen',20);
+INSERT INTO `Area` (`id`,`labelling`,`maxNumberOfPeople`) VALUES (9,'Umkleide 2, Damen',20);
 
 
-INSERT INTO `Course` (`id`,`labelling`) VALUES (1'POWERCIRCLE');
+INSERT INTO `Course` (`id`,`labelling`) VALUES (1,'POWERCIRCLE');
 INSERT INTO `Course` (`id`,`labelling`) VALUES (2,'RÜCKEN FIT');
 INSERT INTO `Course` (`id`,`labelling`) VALUES (3,'SIXPACK EXPRESS');
 INSERT INTO `Course` (`id`,`labelling`) VALUES (4,'HOT IRON');
@@ -66,7 +66,7 @@ INSERT INTO `AreaTimeslot` (`id`,`areaId`,`timeslotId`,`weekday`,`courseId`) VAL
 INSERT INTO `AreaTimeslot` (`id`,`areaId`,`timeslotId`,`weekday`,`courseId`) VALUES (21,2,9,NULL,5);
 INSERT INTO `AreaTimeslot` (`id`,`areaId`,`timeslotId`,`weekday`,`courseId`) VALUES (22,2,10,NULL,5);
 INSERT INTO `AreaTimeslot` (`id`,`areaId`,`timeslotId`,`weekday`,`courseId`) VALUES (23,2,11,NULL,5);
-INSERT INTO `AreaTimeslot` (`id`,`areaId`,`timeslotId`,`weekday`,`courseId`) VALUES (24,1,12,NULL,5);
+INSERT INTO `AreaTimeslot` (`id`,`areaId`,`timeslotId`,`weekday`,`courseId`) VALUES (24,2,12,NULL,5);
 
 INSERT INTO `AreaTimeslot` (`id`,`areaId`,`timeslotId`,`weekday`,`courseId`) VALUES (25,3,14,'1',1);
 INSERT INTO `AreaTimeslot` (`id`,`areaId`,`timeslotId`,`weekday`,`courseId`) VALUES (26,4,16,'1',2);
