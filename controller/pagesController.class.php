@@ -260,11 +260,11 @@ class PagesController extends \Trainingskalender\core\Controller
     
     
         $test = setCardioTimes($this->_params['viewAreaTimeslot'][0], $this->_params['cardioStartTime'], $this->_params['cardioEndTime'], $errors );
-
+/*
         if($test===false){
             header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=Kein Cardioplatz verfügbar');
         }
-
+*/
         $this->_params['memberId'] = getMemberId();
 
         $member = \Trainingskalender\models\Member
