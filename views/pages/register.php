@@ -14,17 +14,17 @@
         value="<?= isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : '' ?>">
       </div>
 
-      <label for="tel">Geschlecht:</label>
+      <label for="tel">Anrede:</label>
       <br>
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Damen"
         <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'Damen' ? "checked" : '') : '' ?>>
-        <label class="form-check-label" for="inlineRadio1">W</label>
+        <label class="form-check-label" for="inlineRadio1">Frau</label>
       </div>
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Herren"
         <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'Herren' ? "checked" : '') : '' ?>>
-        <label class="form-check-label" for="inlineRadio2">M</label>
+        <label class="form-check-label" for="inlineRadio2">Herr</label>
       </div>
       <br>
       <br>
