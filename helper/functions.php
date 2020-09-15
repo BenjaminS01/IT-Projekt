@@ -357,6 +357,8 @@ function getMemberId(){
     }
     else if(isset($_COOKIE['id'])){
         return $_COOKIE['id'];
+    }else{
+        return false;
     }
 
 }

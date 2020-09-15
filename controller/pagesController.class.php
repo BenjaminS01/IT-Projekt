@@ -74,12 +74,21 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionAccount(){
+
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
+
         $memberId = getMemberId();
 
         $this->_params['member'] = \Trainingskalender\models\Member::find('id= ' . '\'' . $memberId . '\'');
     }
 
     public function actionEditPersonalData(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
+
         $errors = [];
         $memberId = getMemberId();
 
@@ -101,6 +110,10 @@ class PagesController extends \Trainingskalender\core\Controller
         }
     }
     public function actionEditPassword(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
+
         $errors = [];
         $memberId = getMemberId();
 
@@ -126,6 +139,9 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionKalender(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
         $db = $GLOBALS['db'];
         $errors = [];
         $memberId = getMemberId();
@@ -172,6 +188,9 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionChooseTypeOfTraining(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
         if(isset($_GET['type'])){
             $_SESSION['entryId'] = null;
 
@@ -194,6 +213,9 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionChooseTimeAndRoom(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
        
         $this->_params['error'] = [];
         if(isset($_GET['f'])){
@@ -234,6 +256,9 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionConfirmTrainingTimes(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
         $errors = [];
 
         if(isset($_POST['trainingTime'])){
@@ -260,11 +285,11 @@ class PagesController extends \Trainingskalender\core\Controller
     
     
         $test = setCardioTimes($this->_params['viewAreaTimeslot'][0], $this->_params['cardioStartTime'], $this->_params['cardioEndTime'], $errors );
-/*
+
         if($test===false){
             header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=Kein Cardioplatz verfügbar');
         }
-*/
+
         $this->_params['memberId'] = getMemberId();
 
         $member = \Trainingskalender\models\Member
@@ -277,18 +302,18 @@ class PagesController extends \Trainingskalender\core\Controller
         $this->_params['changingRoom'] = null;
 
         $test = setChangingRoomBeforeTimes($this->_params['viewAreaTimeslot'][0], $member[0], $this->_params['changingRoomBeforeStartTime'], $this->_params['changingRoomBeforeEndTime'],  $this->_params['changingRoom'], $errors );
-/* 
+
         if($test===false){
             header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=kein Umkleideplatz verfügbar');
         }
-*/
+
         $test = setChangingRoomAfterTimes($this->_params['viewAreaTimeslot'][0], $member[0], $this->_params['changingRoomAfterStartTime'], $this->_params['changingRoomAfterEndTime'],  $this->_params['changingRoom'], $errors );
 
-/*
+
         if($test===false){
             header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=kein Umkleideplatz verfügbar');
         }
-*/
+
 
 
         $this->_params['trainingDate'] = $_POST['trainingDate'];
@@ -299,6 +324,9 @@ class PagesController extends \Trainingskalender\core\Controller
 
 
     public function actionYourTrainingEntries(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
 
         $newDate =  subOneMonth();
        
@@ -313,6 +341,9 @@ class PagesController extends \Trainingskalender\core\Controller
 
     
     public function actionYourTrainingDetails(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
 
         $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
         ::find('trainingDate >= \''. $_GET['id'].'\'',' order by trainingDate');
@@ -321,6 +352,9 @@ class PagesController extends \Trainingskalender\core\Controller
 
     
     public function actionYourTrainingDay(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
 
         $member = getMemberId();
 
@@ -358,6 +392,9 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionDeleteEntry(){
+        if(getMemberId() === false){
+            header('Location: index.php?c=pages&a=start');
+        }
 
         $errors = [];
 

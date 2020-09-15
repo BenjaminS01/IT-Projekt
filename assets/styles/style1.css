@@ -37,6 +37,10 @@
         margin-bottom: 20px;
     }
     
+    .trainingDay {
+        padding-bottom: 20px!important;
+    }
+    
     .box {
         box-sizing: border-box;
     }
@@ -77,7 +81,7 @@
     
     {
         .error {
-            margin-top: 100px;
+            margin-top: 200px;
         }
         .navbar button {
             min-width: 50px!important;

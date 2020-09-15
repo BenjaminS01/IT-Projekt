@@ -41,6 +41,7 @@
     </tbody>
   </table>  
 </div>
+<div class="trainingDayButtons">
 <div class="container">
           <div class="box1">
             <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=chooseTypeOfTraining'; ?>">
@@ -49,7 +50,7 @@
               <button type="submit" class="btn btn-warning">Trainingseintrag ändern</button>
             </form>
           </div>
-                     
+
           <div class="box">
             <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=deleteEntry'; ?>">
               <input type="hidden"  name="id" value="<?= $value['id']?>">
@@ -57,7 +58,10 @@
             </form>
           </div>  
   </div>
+  </div>
   <?php endforeach; ?>
+  <br>
+  <br>
   </div>
   </div>
 
