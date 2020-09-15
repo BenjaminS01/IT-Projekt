@@ -61,9 +61,11 @@ class PagesController extends \Trainingskalender\core\Controller
 
             if(isValidRegister($errors)){
                 register($errors);
+                login($errors);
             }
     
             if(count($errors) === 0){
+
                 header('Location: index.php?c=pages&a=start');
             }
           
