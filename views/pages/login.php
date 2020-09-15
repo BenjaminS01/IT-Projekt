@@ -15,6 +15,7 @@
           <input class="form-check-input" type="checkbox" name='stayLoggedIn' > Eingeloggt bleiben?
         </label>
       </div>
+      <br>
       <button type="submit" name="submitLogin" class="btn btn-success">Login</button>
     </form>
   </div>

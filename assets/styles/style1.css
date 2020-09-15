@@ -25,6 +25,11 @@
         margin-bottom: 20px;
     }
     
+    .register button,
+    .login button {
+        margin-top: 30px!important;
+    }
+    
     .table {
         margin-bottom: 70px;
     }
@@ -35,10 +40,6 @@
     
     .trainingDay .table {
         margin-bottom: 20px;
-    }
-    
-    .trainingDay {
-        padding-bottom: 20px!important;
     }
     
     .box {

@@ -55,9 +55,11 @@
         <label for="passwordCheck">Passwort wiederholen:</label>
         <input type="password" class="form-control" id="registerPasswordCheck" placeholder="Passwort wiederholen" name="passwordCheck" >
       </div>
-
-
+      <br>
       <button type="submit" class="btn btn-success" name="submitRegister">Registrieren</button>
+      <br>
+      <br>
+      <br>
     </form>
   </div>
 </div>
