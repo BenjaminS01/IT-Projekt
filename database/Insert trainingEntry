@@ -1,0 +1,170 @@
+use trainingskalender
+
+DELIMITER $$
+ 
+    
+create or replace function fn_changingRoomBefore (_memberId int, _changingRoom varchar(45), _trainingDate date, _changingRoomBeforeStartTime time)
+returns INT(11)
+begin
+	declare entriesByChangingRoom INT;
+    SELECT COUNT(*) into entriesByChangingRoom  from trainingentry where trainingDate = _trainingDate
+	and memberId = _memberId
+	and changingRoom = _changingRoom and changingRoomBeforeStartTime = _changingRoomBeforeStartTime;
+
+    return entriesByChangingRoom; 
+end $$
+DELIMITER ;
+
+select f_changingRoomBefore('Umkleide 2, Herren','2020-09-30', '08:30:00')
+
+DELIMITER $$
+
+    
+create or replace function fn_changingRoomAfter (_memberId int, _changingRoom varchar(45), _trainingDate date, _changingRoomAfterStartTime time)
+returns INT(11)
+begin
+	declare entriesByChangingRoom INT;
+    SELECT COUNT(*) into entriesByChangingRoom  from trainingentry where trainingDate = _trainingDate
+	and memberId = _memberId
+	and changingRoom = _changingRoom and changingRoomAfterStartTime = _changingRoomAfterStartTime;
+
+    return entriesByChangingRoom; 
+end $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+    
+create or replace function fn_cardio (_memberId int, _trainingDate date, _cardioStartTime time)
+returns INT(11)
+begin
+	declare entriesByCardio INT;
+    SELECT COUNT(*) into entriesByCardio  from trainingentry where trainingDate = _trainingDate 
+	and cardioStartTime = _cardioStartTime and memberId = _memberId;
+
+    return entriesByCardio; 
+end $$
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+
+    
+create or replace function fn_training (_memberId int, _trainingDate date, _areaTimeslotId int)
+returns INT(11)
+begin
+	declare entriesByTrainingTime INT;
+    SELECT COUNT(*) into entriesByTrainingTime  from trainingentry where trainingDate = _trainingDate 
+	and areaTimeslotId = _areaTimeslotId and memberId = _memberId;
+
+    return entriesByTrainingTime; 
+end $$
+DELIMITER ;
+
+DELIMITER $$
+
+   
+create or replace function fn_checkMaxNumberOfPeople (_cardio int, _changingRoomBefore int,_changingRoomAfter int,
+ _training int, _changingRoom varchar(45), _areaTimeslotId int)
+returns boolean
+begin
+	declare maxCardio int;
+	
+	
+	declare maxChanging int;
+	
+	
+	declare maxTraining int;
+	
+	
+    SELECT maxNumberOfPeople into maxCardio from area where labelling = 'Cardio';
+	
+	if (_cardio >= maxCardio )
+    then
+		return false;
+    end if; -- 
+	
+	SELECT maxNumberOfPeople into maxChanging from area where labelling = _changingRoom;
+	
+	if (_changingRoomBefore >= maxChanging or _changingRoomAfter >= maxChanging)
+    then
+		return false;
+    end if;
+		
+
+	 SELECT a.maxNumberOfPeople into maxTraining from area a 
+	 join areaTimeslot ati on a.id = ati.areaId where ati.id = _areaTimeslotId;
+	
+	if _training >= maxTraining 
+    then
+		return false;
+    end if; -- -- 
+
+    return true; 
+end $$
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+ 
+   
+create or replace procedure p_newEntry (
+_cardio int,_changingRoomBefore int,_changingRoomAfter int,_training int, _id int, _trainingDate date, _typeOfTraining enum('Kurs','Einzeltraining')
+, _changingRoom varchar(45), _changingRoomBeforeStartTime time, _changingRoomBeforeEndTime time
+, _changingRoomAfterStartTime time, _changingRoomAfterEndTime time
+, _cardioStartTime time, _cardioEndTime time, _memberId int, _areaTimeslotId int )
+
+begin
+	
+	
+	set _cardio = fn_cardio (_memberId, _trainingDate, _cardioStartTime);
+	
+	
+	set _changingRoomBefore = fn_changingRoomBefore (_memberId, _changingRoom, _trainingDate, _changingRoomBeforeStartTime);
+	
+	
+	set _changingRoomAfter = fn_changingRoomAfter (_memberId, _changingRoom, _trainingDate, _changingRoomAfterStartTime);
+
+	
+	
+	set _training = fn_training (_memberId, _trainingDate, _areaTimeslotId);
+	
+	
+
+    if fn_checkMaxNumberOfPeople(_cardio, _changingRoomBefore, _changingRoomAfter,_training, _changingRoom, _areaTimeslotId)
+    then
+        insert into `trainingentry` 
+		(`id`, `trainingDate`, `typeOfTraining`, `changingRoom`, `changingRoomBeforeStartTime`
+		, `changingRoomBeforeEndTime`, `changingRoomAfterStartTime`, `changingRoomAfterEndTime`, `cardioStartTime`
+		, `cardioEndTime`, `memberId`, `areaTimeslotId`)
+		
+    values (_id, _trainingDate, _typeOfTraining
+, _changingRoom , _changingRoomBeforeStartTime, _changingRoomBeforeEndTime
+, _changingRoomAfterStartTime, _changingRoomAfterEndTime
+, _cardioStartTime, _cardioEndTime, _memberId, _areaTimeslotId );
+	end if;
+
+end $$, 
+DELIMITER ;
+
+DELIMITER $$
+drop function if exists fn_test $$
+    
+create function fn_test (_memberId int, _trainingDate date, _cardioStartTime time, _test1 time, _test2 time, _changingRoom varchar(45))
+returns INT
+begin
+	declare changingRoomBefore int;
+	set changingRoomBefore = fn_changingRoomBefore (_memberId, _changingRoom, _trainingDate, _test1);
+	
+	declare changingRoomAfter int;
+	set changingRoomAfter = fn_changingRoomAfter (_memberId, _changingRoom, _trainingDate, _test2);
+
+    return changingRoomAfter; 
+end $$
+DELIMITER ;
