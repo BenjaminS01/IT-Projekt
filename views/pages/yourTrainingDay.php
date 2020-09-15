@@ -43,6 +43,8 @@
 </div>
 <div class="trainingDayButtons">
 <div class="container">
+          <?php if(strtotime(date("Y-m-d")) <= strtotime($_GET['trainingDate'])) : ?>
+
           <div class="box1">
             <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=chooseTypeOfTraining'; ?>">
               <input type="hidden"  name="id" value="<?= $value['id']?>">
@@ -50,6 +52,8 @@
               <button type="submit" class="btn btn-warning">Trainingseintrag ändern</button>
             </form>
           </div>
+
+          <?php endif; ?>
 
           <div class="box">
             <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=deleteEntry'; ?>">
