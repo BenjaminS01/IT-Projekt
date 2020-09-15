@@ -117,8 +117,9 @@ function isValidPersonalData(&$errors, $member){
         $isEmailUnique = isEmailUnique($errors);
     }
 
+    requiredCheckEditPersonalData($errors);
  
-    if($isEmailUnique){
+    if((count($errors) === 0)){
         return true;
     }
     else{
@@ -158,7 +159,7 @@ function isValidPersonalData(&$errors, $member){
  }
 
  function editPersonalData(&$errors, $id,$gender,$password){
-    $password = password_hash($password, PASSWORD_DEFAULT);
+   // $password = password_hash($password, PASSWORD_DEFAULT);
 
     $member = [
     'id' => $id,
@@ -195,6 +196,25 @@ function isValidPersonalData(&$errors, $member){
     }
     if (!isset($_POST['password'])|| $_POST['password'] === 'Passwort'|| $_POST['password'] === '') {
         array_push($errors, "Bitte wälen Sie ein Passwort");
+    }
+
+}
+
+function requiredCheckEditPersonalData(&$errors)
+{
+    //country, year, month and day can not be unset
+    if (isset($_POST['firstName']) === false || $_POST['firstName'] === 'Vorname'|| $_POST['firstName'] === '') {
+        array_push($errors, "Bitte tragen Sie Ihren Vornamen ein");
+    }
+    if (!isset($_POST['lastName'])|| $_POST['lastName'] === 'Nachname'|| $_POST['lastName'] === '') {
+        array_push($errors, "Bitte tragen Sie Ihren Nachnamen ein");
+    }
+
+    if (!isset($_POST['email']) || $_POST['email'] === 'E-Mail'|| $_POST['email'] === '') {
+        array_push($errors, "Bitte tragen Sie Ihre E-Mail Adresse ein");
+    }
+    if (!isset($_POST['phoneNumber']) || $_POST['phoneNumber'] === 'Telefonnummer'|| $_POST['phoneNumber'] === '') {
+        array_push($errors, "Bitte tragen Sie Ihre E-Mail Adresse ein");
     }
 
 }

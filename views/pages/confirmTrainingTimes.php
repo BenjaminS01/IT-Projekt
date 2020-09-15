@@ -50,5 +50,7 @@
       <input type="hidden" id="trainingType2" name="areaTimeslotId" value="<?= $this->_params['viewAreaTimeslot'][0]['id']?>">    
 
   <button type="submit" name="submitTrainingEntry" class="btn btn-success" >Eintrag bestätigen</button>
+  <br>
+  <br>
 </form>
 </div>
