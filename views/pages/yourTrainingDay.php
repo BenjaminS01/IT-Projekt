@@ -46,7 +46,7 @@
           <div class="box1">
             <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=chooseTypeOfTraining'; ?>">
               <input type="hidden"  name="id" value="<?= $value['id']?>">
-              <input type="hidden"  name="trainingDate" value="<?=dateInRightOrder( $_GET['trainingDate'])?>">
+              <input type="hidden"  name="trainingDate" value="<?= $_GET['trainingDate']?>">
               <button type="submit" class="btn btn-warning">Trainingseintrag ändern</button>
             </form>
           </div>
