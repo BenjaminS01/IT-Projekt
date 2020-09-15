@@ -93,14 +93,26 @@ function isNewPasswordValid(&$errors)
     return true;
 }
 
+function validateEmail(&$errors){
+   
+    $pattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
+
+    if(preg_match($pattern, $_POST['email'])!==1){
+        array_push($errors, 'Bitte geben Sie eine gültige E-Mail-Adresse ein');
+        return false;
+    }
+    return true;
+}
+
 function isValidRegister(&$errors){
 
    requiredCheck($errors);
    $arePwTheSame  = arePwdAndPwdCheckTheSame($errors);
    $isEmailUnique = isEmailUnique($errors);
    $isPasswordValid = isPasswordValid($errors);
+   $isValidateEmail = validateEmail($errors);
 
-   if($arePwTheSame && $isEmailUnique && $isPasswordValid && count($errors)==0){
+   if($arePwTheSame && $isEmailUnique && $isValidateEmail && $isPasswordValid && count($errors)==0){
        return true;
    }
    else{
@@ -116,6 +128,8 @@ function isValidPersonalData(&$errors, $member){
 
         $isEmailUnique = isEmailUnique($errors);
     }
+
+    validateEmail($errors);
 
     requiredCheckEditPersonalData($errors);
  

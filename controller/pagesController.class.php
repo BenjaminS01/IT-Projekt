@@ -107,7 +107,7 @@ class PagesController extends \Trainingskalender\core\Controller
             if(count($errors) === 0){
                 header('Location: index.php?c=pages&a=account');
             }
-          echo $errors;
+          
             $this->_params['error'] = $errors;
         }
     }
