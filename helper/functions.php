@@ -820,6 +820,19 @@ function trainingEntry( &$errors){
 
         $trainingEntry->save($errors);
 
+        if(areTooMuchEntries()){
+            $trainingEntry->delete($errors);
+            array_push($errors, "leider ist der Zeitslot belegt");
+            return false;
+        }
+        else{
+            return true;
+        }
+
+        
+
+
+
         
 
 
@@ -828,7 +841,6 @@ function trainingEntry( &$errors){
 /////////////////////////
 
 /*
-    $id = 'NULL';
  
     if(isset($_SESSION['entryId'])){
         
@@ -873,20 +885,17 @@ function trainingEntry( &$errors){
 
        $db = $GLOBALS['db'];
 
-        $query = $db->prepare('INSERT INTO `trainingentry` (`id`, `trainingDate`, `typeOfTraining`, `changingRoom`, `changingRoomBeforeStartTime`, `changingRoomBeforeEndTime`, `changingRoomAfterStartTime`, `changingRoomAfterEndTime`, `cardioStartTime`, `cardioEndTime`, `memberId`, `areaTimeslotId`) SELECT * FROM (SELECT "'.$id.'", "'.$trainingDate.'", "'.$typeOfTraining.'", "'.$changingRoom.'", "'.$changingRoomBeforeStartTime.'", "'.$changingRoomBeforeStartTime.'", "'.$changingRoomAfterStartTime.'", "'.$changingRoomAfterEndTime.'", "'.$cardioStartTime.'", "'.$cardioEndTime.'", "'.$memberId.'", "'.$areaTimeslotId.'") 
-         WHERE (
-            SELECT 
-            from `trainingentry`
-            WHERE (Select COUNT(*) from trainingentry where trainingDate = "'.$trainingDate.'" and changingRoom ="'.$changingRoom.'" and changingRoomBeforeStartTime = "'.$changingRoomBeforeStartTime.'") < '.$changingRoomdB[0]['maxNumberOfPeople'].' 
-           
-        )  ;');
+        $query = $db->prepare('CALL p_newEntry(0,0,0,0, NULL, "'.$trainingDate.'", '.'"'.$typeOfTraining.'", "'.$changingRoom.'", "'.$changingRoomBeforeStartTime
+        .'", "'.$changingRoomBeforeEndTime.'", "'.$changingRoomAfterStartTime.'", "'.$changingRoomAfterEndTime
+        .'", "'.$cardioStartTime.'", "'.$cardioEndTime.'", '.$memberId.','.$areaTimeslotId.')'); 
+         
 
       //  and............
       //  and  typeOfTraining = "'.$typeOfTraining.'" and  changingRoomBeforeStartTime = "' .$changingRoomBeforeStartTime.'" and changinRoomBeforeEndTime = "'.$changingRoomBeforeEndTime.'" and changingRoomAfterStartTime = "'.$changingRoomAfterStartTime.'" and changingRoomAfterEndTime = "'.$changingRoomAfterEndTime.'" and CardioStartTime = "'.$cardioStartTime.'" and cardioEndTime = "'.$cardioEndTime.'" and memberId = "'.$memberId.'" and areaTimeslotId = "'.$areaTimeslotId.'"
 
         $query->execute();
 
-        */
+    */    
         
 }
 
@@ -957,4 +966,38 @@ function timeInRightOrder($_time, $Uhr=false){
     } else {
         return '';
     }
+}
+
+function areTooMuchEntries(){
+    $countChangingRoomBefore =  \Trainingskalender\models\TrainingEntry
+        ::find('changingRoomBeforeStartTime =\''.$_POST['changingRoomBeforeStartTime'].'\' and changingRoom = \''.$_POST['changingRoom'].'\' and trainingDate = \''.$_POST['trainingDate'].'\'');
+
+        $countChangingRoomAfter =  \Trainingskalender\models\TrainingEntry
+        ::find('changingRoomAfterStartTime =\''.$_POST['changingRoomAfterStartTime'].'\' and changingRoom = \''.$_POST['changingRoom'].'\' and trainingDate = \''.$_POST['trainingDate'].'\'');
+
+        $countCardio =  \Trainingskalender\models\TrainingEntry
+        ::find('cardioStartTime =\''.$_POST['cardioStartTime'].'\'  and trainingDate = \''.$_POST['trainingDate'].'\'');
+
+        $countTrainingTime =  \Trainingskalender\models\TrainingEntry
+        ::find('areaTimeslotId =\''.$_POST['areaTimeslotId'].'\'  and trainingDate = \''.$_POST['trainingDate'].'\'');
+
+
+        $maxChangingRoom =  \Trainingskalender\models\Area
+        ::find('labelling =\''.$_POST['changingRoom'].'\'');
+        $areaTimeslot =  \Trainingskalender\models\AreaTimeslot
+        ::find('id =\''.$_POST['areaTimeslotId'].'\'');
+        $maxTrainingRoom =  \Trainingskalender\models\Area
+        ::find('id =\''.$areaTimeslot[0]['areaId'].'\'');
+        $maxCardio =  \Trainingskalender\models\Area
+        ::find('labelling =\'Cardio\'');
+
+        if(count($countCardio)<=$maxCardio[0]['maxNumberOfPeople'] && count($countChangingRoomBefore)<=$maxChangingRoom[0]['maxNumberOfPeople']
+        && count($countChangingRoomAfter)<=$maxChangingRoom[0]['maxNumberOfPeople'] 
+        && count($countTrainingTime)<=$maxTrainingRoom[0]['maxNumberOfPeople']){
+            return false;
+        }
+        else{
+
+            return true;  
+        } 
 }

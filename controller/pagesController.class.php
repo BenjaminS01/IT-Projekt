@@ -9,6 +9,38 @@ class PagesController extends \Trainingskalender\core\Controller
     public function actionStart(){
 
         
+        $countChangingRoomBefore =  \Trainingskalender\models\TrainingEntry
+        ::find('changingRoomBeforeStartTime =\''.$_POST['changingRoomBeforeStartTime'].'\' and changingRoom = \''.$_POST['changingRoom'].'\' and trainingDate = \''.$_POST['trainingDate'].'\'');
+
+        $countChangingRoomAfter =  \Trainingskalender\models\TrainingEntry
+        ::find('changingRoomAfterStartTime =\''.$_POST['changingRoomAfterStartTime'].'\' and changingRoom = \''.$_POST['changingRoom'].'\' and trainingDate = \''.$_POST['trainingDate'].'\'');
+
+        $countCardio =  \Trainingskalender\models\TrainingEntry
+        ::find('cardioStartTime =\''.$_POST['cardioStartTime'].'\'  and trainingDate = \''.$_POST['trainingDate'].'\'');
+
+        $countTrainingTime =  \Trainingskalender\models\TrainingEntry
+        ::find('areaTimeslotId =\''.$_POST['areaTimeslotId'].'\'  and trainingDate = \''.$_POST['trainingDate'].'\'');
+
+
+        $maxChangingRoom =  \Trainingskalender\models\Area
+        ::find('labelling =\''.$_POST['changingRoom'].'\'');
+        $areaTimeslot =  \Trainingskalender\models\AreaTimeslot
+        ::find('id =\''.$_POST['areaTimeslotId'].'\'');
+        $maxTrainingRoom =  \Trainingskalender\models\Area
+        ::find('id =\''.$areaTimeslot[0]['timeslotId'].'\'');
+        $maxCardio =  \Trainingskalender\models\Area
+        ::find('labelling =\'Cardio\'');
+        
+        var_dump($maxTrainingRoom);
+        var_dump($maxCardio);
+        var_dump($maxChangingRoom);
+
+        var_dump(count($countCardio));
+        var_dump(count($countChangingRoomBefore));
+        var_dump(count($countChangingRoomAfter));
+        var_dump(count($countTrainingTime));
+
+
 
         $errors = [];
        if(isset($_GET['param'])) {
@@ -21,10 +53,13 @@ class PagesController extends \Trainingskalender\core\Controller
 
         if (isset($_POST['submitTrainingEntry'])){
             
-            trainingEntry($errors);
-            if(!empty($errors)){
+           $test = trainingEntry($errors);
+           if(!$test){
+            header('Location: index.php?c=pages&a=kalender&f='.implode(", ", $errors));
+           }
+           else if(!empty($errors)){
             
-                header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_GET['typeOfTraining'].'&trainingDate='.$_GET['trainingDate'].'&f='.$errors[0]);
+                header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_GET['typeOfTraining'].'&trainingDate='.$_GET['trainingDate'].'&f='.implode(", ", $errors));
             }else if(isset($_SESSION['entryId'])){
                 $_SESSION['entryId'] = null;
                 $this->_params['message'] = 'Ihr eintrag wurde erfolgreich geändert. Wir wünschen Ihnen ein erfolgreiches Training';
@@ -144,8 +179,15 @@ class PagesController extends \Trainingskalender\core\Controller
         if(getMemberId() === false){
             header('Location: index.php?c=pages&a=start');
         }
-        $db = $GLOBALS['db'];
         $errors = [];
+
+        if(isset($_GET['f'])){
+          
+            array_push( $errors, $_GET['f']);
+            $this->_params['error'] = $errors; 
+        }
+
+        $db = $GLOBALS['db'];
         $memberId = getMemberId();
         $_SESSION['trainingDate'] = null;
 
