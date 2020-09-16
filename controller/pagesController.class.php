@@ -8,39 +8,6 @@ class PagesController extends \Trainingskalender\core\Controller
 
     public function actionStart(){
 
-        
-        $countChangingRoomBefore =  \Trainingskalender\models\TrainingEntry
-        ::find('changingRoomBeforeStartTime =\''.$_POST['changingRoomBeforeStartTime'].'\' and changingRoom = \''.$_POST['changingRoom'].'\' and trainingDate = \''.$_POST['trainingDate'].'\'');
-
-        $countChangingRoomAfter =  \Trainingskalender\models\TrainingEntry
-        ::find('changingRoomAfterStartTime =\''.$_POST['changingRoomAfterStartTime'].'\' and changingRoom = \''.$_POST['changingRoom'].'\' and trainingDate = \''.$_POST['trainingDate'].'\'');
-
-        $countCardio =  \Trainingskalender\models\TrainingEntry
-        ::find('cardioStartTime =\''.$_POST['cardioStartTime'].'\'  and trainingDate = \''.$_POST['trainingDate'].'\'');
-
-        $countTrainingTime =  \Trainingskalender\models\TrainingEntry
-        ::find('areaTimeslotId =\''.$_POST['areaTimeslotId'].'\'  and trainingDate = \''.$_POST['trainingDate'].'\'');
-
-
-        $maxChangingRoom =  \Trainingskalender\models\Area
-        ::find('labelling =\''.$_POST['changingRoom'].'\'');
-        $areaTimeslot =  \Trainingskalender\models\AreaTimeslot
-        ::find('id =\''.$_POST['areaTimeslotId'].'\'');
-        $maxTrainingRoom =  \Trainingskalender\models\Area
-        ::find('id =\''.$areaTimeslot[0]['timeslotId'].'\'');
-        $maxCardio =  \Trainingskalender\models\Area
-        ::find('labelling =\'Cardio\'');
-        
-        var_dump($maxTrainingRoom);
-        var_dump($maxCardio);
-        var_dump($maxChangingRoom);
-
-        var_dump(count($countCardio));
-        var_dump(count($countChangingRoomBefore));
-        var_dump(count($countChangingRoomAfter));
-        var_dump(count($countTrainingTime));
-
-
 
         $errors = [];
        if(isset($_GET['param'])) {
