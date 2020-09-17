@@ -18,23 +18,7 @@ class PagesController extends \Trainingskalender\core\Controller
             
         }
 
-        if (isset($_POST['submitTrainingEntry'])){
-            
-           $test = trainingEntry($errors);
-           if(!$test){
-            header('Location: index.php?c=pages&a=kalender&f='.implode(", ", $errors));
-           }
-           else if(!empty($errors)){
-            
-                header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_GET['typeOfTraining'].'&trainingDate='.$_GET['trainingDate'].'&f='.implode(", ", $errors));
-            }else if(isset($_SESSION['entryId'])){
-                $_SESSION['entryId'] = null;
-                $this->_params['message'] = 'Ihr eintrag wurde erfolgreich geändert. Wir wünschen Ihnen ein erfolgreiches Training';
-            }else{
-                $_SESSION['entryId'] = null;
-                $this->_params['message'] = 'Ihr eintrag wurde vom System erfasst. Wir wünschen Ihnen ein erfolgreiches Training';
-            }
-        }
+       
 
     }
 
@@ -47,7 +31,7 @@ class PagesController extends \Trainingskalender\core\Controller
             login($errors);
 
             if(count($errors) === 0){
-                header('Location: index.php?c=pages&a=start');
+                header('Location: index.php?c=pages&a=kalender');
             }
 
             $this->_params['error'] = $errors;
@@ -68,7 +52,7 @@ class PagesController extends \Trainingskalender\core\Controller
     
             if(count($errors) === 0){
 
-                header('Location: index.php?c=pages&a=start');
+                header('Location: index.php?c=pages&a=kalender');
             }
           
             $this->_params['error'] = $errors;
@@ -143,6 +127,31 @@ class PagesController extends \Trainingskalender\core\Controller
     }
 
     public function actionKalender(){
+
+
+
+
+        if (isset($_POST['submitTrainingEntry'])){
+            
+            $test = trainingEntry($errors);
+            if(!$test){
+             header('Location: index.php?c=pages&a=kalender&f='.implode(", ", $errors));
+            }
+            else if(!empty($errors)){
+             
+                 header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_GET['typeOfTraining'].'&trainingDate='.$_GET['trainingDate'].'&f='.implode(", ", $errors));
+             }else if(isset($_SESSION['entryId'])){
+                 $_SESSION['entryId'] = null;
+                 $this->_params['message'] = 'Ihr eintrag wurde erfolgreich geändert. Wir wünschen Ihnen ein erfolgreiches Training';
+             }else{
+                 $_SESSION['entryId'] = null;
+                 $this->_params['message'] = 'Ihr eintrag wurde vom System erfasst. Wir wünschen Ihnen ein erfolgreiches Training';
+             }
+         }
+
+
+
+
         if(getMemberId() === false){
             header('Location: index.php?c=pages&a=start');
         }

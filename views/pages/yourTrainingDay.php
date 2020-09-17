@@ -1,5 +1,5 @@
 <div class="container">
-<h1>Deine Trainingszeiten für den <?=dateInRightOrder($_GET['trainingDate'])?></h1>
+<h1>Ihre Trainingszeiten für den <?=dateInRightOrder($_GET['trainingDate'])?></h1>
 <div class="trainingDay">
 
   <?php foreach ($this->_params['trainingEntry'] as $value): ?>

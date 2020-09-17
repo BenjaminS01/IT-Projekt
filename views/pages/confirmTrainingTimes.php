@@ -35,7 +35,7 @@
     </tbody>
   </table>  
 
-<form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=start'; ?>">
+<form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=kalender'; ?>">
 <input type="hidden" id="trainingDate2" name="trainingDate" value="<?= $_POST['trainingDate']?>">
       <input type="hidden" id="trainingType2" name="trainingDate" value="<?= $this->_params['trainingDate']?>">
       <input type="hidden" id="trainingType2" name="typeOfTraining" value="<?= $_POST['typeOfTraining']?>">
