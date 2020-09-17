@@ -49,20 +49,18 @@
       <input type="hidden" id="trainingType2" name="memberId" value="<?= $this->_params['memberId']?>">
       <input type="hidden" id="trainingType2" name="areaTimeslotId" value="<?= $this->_params['viewAreaTimeslot'][0]['id']?>">    
 
-      <div class="box1">
+  <div class="box1">
   <button type="submit" name="submitTrainingEntry" class="btn btn-success" >Eintrag bestätigen</button>
   </div>
+
   </form>
           <div class="box">
             <form method="get">
             <input type="hidden"  name="c" value="pages">
         <input type="hidden"  name="a" value="kalender">
         <button type="submit"   class="btn btn-info">zurück zum Kalender</button>
-            </form>
-      </div>  
-
-
+  </form>
+  </div>  
   <br>
   <br>
-
 </div>

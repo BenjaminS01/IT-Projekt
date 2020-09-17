@@ -40,6 +40,5 @@
                   <button type="submit" class="btn btn-warning">Passwort ändern</button>
                 </form>
               </div>
-            
   </div>
 </div>

@@ -17,12 +17,12 @@
       <label for="tel">Anrede:</label>
       <br>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Damen"
+        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Damen" required 
         <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'Damen' ? "checked" : '') : '' ?>>
         <label class="form-check-label" for="inlineRadio1">Frau</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Herren"
+        <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Herren" required 
         <?= isset($_POST['genderRadio']) ? ($_POST['genderRadio'] === 'Herren' ? "checked" : '') : '' ?>>
         <label class="form-check-label" for="inlineRadio2">Herr</label>
       </div>
@@ -38,14 +38,14 @@
 
       <div class="form-group">
         <label for="pwd">E-Mail:</label>
-        <input type="text" class="form-control" id="registerEmail" placeholder="E-Mail" name="email" 
+        <input type="text" class="form-control" id="registerEmail" placeholder="E-Mail" name="email" required 
         value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
 
       </div>
 
       <div class="form-group">
         <label for="password">Passwort:</label>
-        <input type="password" class="form-control" id="registerPassword" placeholder="Passwort" name="password" 
+        <input type="password" class="form-control" id="registerPassword" placeholder="Passwort" name="password" required  
         onkeyup="validatePassword();">
         <div class="passwordMessage">
         <label id="feedback"></label>
@@ -53,7 +53,7 @@
       </div>
       <div class="form-group">
         <label for="passwordCheck">Passwort wiederholen:</label>
-        <input type="password" class="form-control" id="registerPasswordCheck" placeholder="Passwort wiederholen" name="passwordCheck" >
+        <input type="password" class="form-control" id="registerPasswordCheck" placeholder="Passwort wiederholen" name="passwordCheck" required  >
       </div>
       <br>
       <button type="submit" class="btn btn-success" name="submitRegister">Registrieren</button>

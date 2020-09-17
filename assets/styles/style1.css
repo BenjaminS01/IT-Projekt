@@ -166,7 +166,7 @@
     .k td.heute {
         color: red;
         font-weight: bold;
-        background: #abdcf8;
+        background: #f89b43;
     }
     
     .k td.alt {
@@ -174,64 +174,6 @@
         background: #d1d1d1;
     }
     /**********Kalender end **********/
-    /**********php Kalender******/
-    /*  
-    .tg {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-    
-    .tg td {
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        padding: 10px 5px;
-        border-style: solid;
-        border-width: 1px;
-        overflow: hidden;
-        word-break: normal;
-    }
-    
-    .tg th {
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        font-weight: normal;
-        padding: 10px 5px;
-        border-style: solid;
-        border-width: 1px;
-        overflow: hidden;
-        word-break: normal;
-    }
-    
-    .tg .tg-mgse {
-        font-family: Arial, Helvetica, sans-serif !important;
-        ;
-        background-color: #9aff99
-    }
-    
-    .tg .tg-efv9 {
-        font-family: Arial, Helvetica, sans-serif !important;
-    }
-    
-    .tg .tg-4byr {
-        font-family: Arial, Helvetica, sans-serif !important;
-        ;
-        background-color: #faf4f4
-    }
-    
-    .tg .tg-q82y {
-        font-family: Arial, Helvetica, sans-serif !important;
-        ;
-        background-color: #ffffff
-    }
-    
-    .tg .tg-u666 {
-        font-family: Arial, Helvetica, sans-serif !important;
-        ;
-        background-color: #9aff99;
-        color: #333333
-    }
-    */
-    /*************/
     /**********ajax load more ************/
     
     .list_item {

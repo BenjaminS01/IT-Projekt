@@ -19,14 +19,14 @@
             
             <?php
                 if (!isset($_SESSION['id']) && !isset($_COOKIE['id'])) {
-                    include 'views/loginNavbar.php';
+                    include 'views/loggedOutNavbar.php';
                 }
             ?>
         
             
             <?php
                 if (isset($_SESSION['id']) || isset($_COOKIE['id'])) {
-                    include 'views/logoutNavbar.php';
+                    include 'views/loggedInNavbar.php';
                 }
             ?>
         </div>

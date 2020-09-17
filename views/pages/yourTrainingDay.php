@@ -5,7 +5,7 @@
   <?php foreach ($this->_params['trainingEntry'] as $value): ?>
   <?php $view =  \Trainingskalender\models\ViewAreaTimeslot
         ::find('id = \''.$value['areaTimeslotId'].'\''); 
-        ?>
+  ?>
         
 <div class="container">
 <h3><?=$view[0]['course'].', '.timeInRightOrder($view[0]['startTime']).'-'.timeInRightOrder($view[0]['endTime'],true)?></h3>
@@ -66,6 +66,6 @@
   <?php endforeach; ?>
   <br>
   <br>
-  </div>
-  </div>
+</div>
+</div>
 

@@ -2,14 +2,6 @@
 
 <h1 style="margin-left: 18px;" >Ihre Trainingstage</h1>
 
-
-
-
-<?php foreach ($this->_params['trainingEntry'] as $value): ?>
-
-
-  <?php endforeach; ?>
-
   <div class="postList">
     <?php
     // Include the database configuration file
@@ -19,7 +11,7 @@
     $db = $GLOBALS['db'];
     $memberId = getMemberId();
 
-    $query = $db->prepare("SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId = ".$memberId. " ORDER BY TrainingDate DESC LIMIT 30");
+    $query = $db->prepare("SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId = ".$memberId. " ORDER BY TrainingDate DESC LIMIT 15");
     $query->execute();
     $result = $query->fetchall();
 

@@ -15,7 +15,7 @@ if(!empty($_POST["id"])){
     $result = $query->fetchall();
     $totalRowCount = count($result);
     
-    $showLimit = 30;
+    $showLimit = 15;
     
   
     // Get records from the database
@@ -24,9 +24,7 @@ if(!empty($_POST["id"])){
     if(count($result) > 0){ 
         foreach($result as $row){ 
             $postID = $row['trainingDate'];
-
-
-         
+      
     ?>
     <div class="list_item">
         <div class="container">

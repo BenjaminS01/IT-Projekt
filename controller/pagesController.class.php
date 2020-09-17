@@ -10,6 +10,8 @@ class PagesController extends \Trainingskalender\core\Controller
 
 
         $errors = [];
+
+        //logout button
        if(isset($_GET['param'])) {
 
             if ($_GET['param']=='logout') {
@@ -17,8 +19,6 @@ class PagesController extends \Trainingskalender\core\Controller
             }
             
         }
-
-       
 
     }
 
@@ -128,8 +128,9 @@ class PagesController extends \Trainingskalender\core\Controller
 
     public function actionKalender(){
 
-
-
+        /**begin
+         * edit trainingEntry 
+         */
 
         if (isset($_POST['submitTrainingEntry'])){
             
@@ -142,19 +143,19 @@ class PagesController extends \Trainingskalender\core\Controller
                  header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_GET['typeOfTraining'].'&trainingDate='.$_GET['trainingDate'].'&f='.implode(", ", $errors));
              }else if(isset($_SESSION['entryId'])){
                  $_SESSION['entryId'] = null;
-                 $this->_params['message'] = 'Ihr eintrag wurde erfolgreich geändert. Wir wünschen Ihnen ein erfolgreiches Training';
+                 $this->_params['message'] = 'Ihr Eintrag wurde erfolgreich geändert. Wir wünschen Ihnen ein erfolgreiches Training';
              }else{
                  $_SESSION['entryId'] = null;
-                 $this->_params['message'] = 'Ihr eintrag wurde vom System erfasst. Wir wünschen Ihnen ein erfolgreiches Training';
+                 $this->_params['message'] = 'Ihr Eintrag wurde vom System erfasst. Wir wünschen Ihnen ein erfolgreiches Training';
              }
-         }
+         } // end edit trainingEntry
 
-
-
+         
 
         if(getMemberId() === false){
             header('Location: index.php?c=pages&a=start');
         }
+
         $errors = [];
 
         if(isset($_GET['f'])){
@@ -163,48 +164,45 @@ class PagesController extends \Trainingskalender\core\Controller
             $this->_params['error'] = $errors; 
         }
 
+
+
         $db = $GLOBALS['db'];
         $memberId = getMemberId();
         $_SESSION['trainingDate'] = null;
 
+        // next month as int (1-12)
         $nxtm = strtotime("next month");
         $this->_params['month'] = date("n", $nxtm);
 
-        if(!isset($_GET['nextMonth'])){
-       
+        if(!isset($_GET['nextMonth'])){  
+        //select all trainingEntries from the user for the actual month
+
         $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
         and month(curdate()) = month(TrainingDate)');
         $query1->execute();
         $this->_params['trainingEntry'] = $query1->fetchall();
+
         }else if(isset($_GET['nextMonth']) && $this->_params['month'] < 12 ){
-            $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
+        //select all trainingEntries from the user for the next month 
+        
+        $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
         and month(DATE_ADD(curdate(), INTERVAL 1 MONTH)) = month(TrainingDate)');
         $query1->execute();
         $this->_params['trainingEntry'] = $query1->fetchall();
         }else {
-            $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(DATE_ADD(curdate(), INTERVAL 1 YEAR)) = year(trainingDate)
+        // you need a new year -
+        // if the next month is january ($this->_params['month'] >= 12)
+
+        $query1 = $db->prepare('SELECT DISTINCT trainingDate FROM trainingEntry WHERE memberId =\'' . $memberId . '\' and year(DATE_ADD(curdate(), INTERVAL 1 YEAR)) = year(trainingDate)
         and month(DATE_ADD(curdate(), INTERVAL 1 MONTH)) = month(TrainingDate)');
         $query1->execute();
         $this->_params['trainingEntry'] = $query1->fetchall();
         }
-/*
-       $this->_params['trainingEntry'] = \Trainingskalender\models\TrainingEntry::find('memberId= ' . '\'' . $memberId . '\' and year(curdate()) = year(trainingDate)
-       and month(curdate()) = month(TrainingDate)');
-*/
-      
-     
-   
-        
 
-
-        
-        
-        /////test
         	foreach ($this->_params['trainingEntry'] as $key => $value){
                 $this->_params['events'][$this->_params['trainingEntry'][$key]['trainingDate']] = $this->_params['trainingEntry'][$key];
             }
         
-
     }
 
     public function actionChooseTypeOfTraining(){
@@ -217,12 +215,12 @@ class PagesController extends \Trainingskalender\core\Controller
         }
         
 
-        if(isset($_GET['trainingDate'])){
+        if(isset($_GET['trainingDate'])){ //new entry
 
             $this->_params['date'] = getTrainingDateClass($_GET['trainingDate']);
             $this->_params['trainingDate'] = $_GET['trainingDate'];
         }
-        else if(isset($_POST['id'])){
+        else if(isset($_POST['id'])){ //edit entry
             $this->_params['date'] = getTrainingDateClass($_POST['trainingDate']);
             $this->_params['trainingDate'] = $_POST['trainingDate'];
             $_SESSION['entryId'] = $_POST['id'];
@@ -240,7 +238,6 @@ class PagesController extends \Trainingskalender\core\Controller
         $this->_params['error'] = [];
         if(isset($_GET['f'])){
             array_push($this->_params['error'], $_GET['f']);
-            //$this->_params['error'] = $_GET['f'];
         }
 
         if(!isset($_GET['typeOfTraining'])){
@@ -264,11 +261,6 @@ class PagesController extends \Trainingskalender\core\Controller
         //Get the day of the week using PHP's date function.
         $dayOfWeek = date("N", strtotime($date));
 
-       // $this->_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
-        // ::find('weekday =\''.$dayOfWeek.'\'');
-
-        
-
         $this->_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
         ::find('weekday =\''.$dayOfWeek.'\'',' order by startTime');
         }
@@ -281,12 +273,14 @@ class PagesController extends \Trainingskalender\core\Controller
         }
         $errors = [];
 
+        // for training type: "Training"
         if(isset($_POST['trainingTime'])){
 
         $this->_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
         ::find('startTime =\''.$_POST['trainingTime'].'\' and labelling = \''.$_POST['trainingArea'].'\'');
         $this->_params['trainingArea'] = $_POST['trainingArea'];
-        }else{
+        }
+        else{ // for training type: "Kurs"
         $this->_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
         ::find('id =\''.$_POST['viewAreaTimeslotId'].'\'');
 
@@ -300,7 +294,7 @@ class PagesController extends \Trainingskalender\core\Controller
         $test = isEntryUnique();
 
         if($test===false){
-            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=Ihr eintrag existiert bereits');
+            header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=Ihr Eintrag existiert bereits');
         }
     
     
@@ -334,8 +328,6 @@ class PagesController extends \Trainingskalender\core\Controller
             header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=kein Umkleideplatz verfügbar');
         }
 
-
-
         $this->_params['trainingDate'] = $_POST['trainingDate'];
         $this->_params['typeOfTraining'] = $_POST['typeOfTraining'];
 
@@ -348,15 +340,7 @@ class PagesController extends \Trainingskalender\core\Controller
             header('Location: index.php?c=pages&a=start');
         }
 
-        $newDate =  subOneMonth();
-       
-        $this->_params['test'] = 'start';
-
-        $this->_params['trainingEntry'] =  \Trainingskalender\models\TrainingEntry
-        ::find('trainingDate >= \''. $newDate.'\'',' order by trainingDate');
         
-
-
     }
 
     

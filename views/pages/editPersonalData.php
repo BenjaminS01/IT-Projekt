@@ -17,7 +17,7 @@
       </div>
       <div class="form-group">
         <label for="phoneNumber">Telefonnummer:</label>
-        <input type="text" class="form-control" id="registerPhone"  name="phoneNumber" required
+        <input type="text" class="form-control" id="registerPhone"  name="phoneNumber" 
         value="<?= isset($_POST['phoneNumber']) ? htmlspecialchars($_POST['phoneNumber']) : htmlspecialchars($this->_params['member'][0]['phoneNumber']) ?>">
         <div class="valid-feedback">Gültig</div>
         <div class="invalid-feedback">Bitte füllen Sie das Feld aus</div>

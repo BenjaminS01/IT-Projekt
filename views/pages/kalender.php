@@ -24,7 +24,7 @@
     </form>
     <?php endif; ?>
     </div>
-<script src="assets/js/kalenderCall.js"></script>
+<script src="assets/js/kalenderFunction.js"></script>
 <?php if (!isset($_GET['nextMonth'])) : ?>
 <script src="assets/js/kalender.js"></script>
 <?php else : ?>
