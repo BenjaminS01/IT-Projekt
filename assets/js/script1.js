@@ -13,14 +13,14 @@ function validatePassword() {
 
         // If the password has at least one number in addition to letters
         // and contains a special character, it is "very strong".
-        if (val.match(/\d{1,}/) && val.match(/[a-zA-ZäöüÄÖÜ]{1,}/) && val.match(/\W/)) {
+        if (val.match(/[a-zA-Z]{1,}/) && val.match(/[0-9]{1,}/) && val.match(/\W/)) {
             call.style.color = "#428c0d";
             call.innerHTML = "<p>Ihr Passwort ist sehr sicher</p>";
         }
 
 
         // If the password contains only a number or a special character
-        else if (val.match(/[a-zA-Z]{1,}/) && val.match(/[0-9]{1,}/) || val.match(/\W/) && val.match(/[a-zA-ZäöüÄÖÜ]{1,}/)) {
+        else if (val.match(/[a-zA-Z]{1,}/) && val.match(/[0-9]{1,}/)) {
             call.style.color = "#56a40c";
             call.innerHTML = "<p>Ihr Passwort ist sicher</p>";
 

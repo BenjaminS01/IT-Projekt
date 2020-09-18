@@ -129,14 +129,14 @@ class PagesController extends \Trainingskalender\core\Controller
     public function actionKalender(){
 
         /**begin
-         * edit trainingEntry 
+         *  trainingEntry 
          */
 
         if (isset($_POST['submitTrainingEntry'])){
             
             $test = trainingEntry($errors);
             if(!$test){
-             header('Location: index.php?c=pages&a=kalender&f='.implode(", ", $errors));
+             header('Location: index.php?c=pages&a=kalender&f=Leider ist kein Trainingsplatz frei');
             }
             else if(!empty($errors)){
              
@@ -148,7 +148,7 @@ class PagesController extends \Trainingskalender\core\Controller
                  $_SESSION['entryId'] = null;
                  $this->_params['message'] = 'Ihr Eintrag wurde vom System erfasst. Wir wünschen Ihnen ein erfolgreiches Training';
              }
-         } // end edit trainingEntry
+         } // end trainingEntry
 
          
 
@@ -264,6 +264,7 @@ class PagesController extends \Trainingskalender\core\Controller
         $this->_params['viewAreaTimeslot'] =  \Trainingskalender\models\ViewAreaTimeslot
         ::find('weekday =\''.$dayOfWeek.'\'',' order by startTime');
         }
+        
 
     }
 
@@ -328,10 +329,25 @@ class PagesController extends \Trainingskalender\core\Controller
             header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=kein Umkleideplatz verfügbar');
         }
 
+
+
+        $maxTrainingRoom =  \Trainingskalender\models\Area
+        ::find('labelling =\''.$this->_params['viewAreaTimeslot'][0]['labelling'].'\'');
+        $countTrainingTime =  \Trainingskalender\models\TrainingEntry
+        ::find('areaTimeslotId =\''.$this->_params['viewAreaTimeslot'][0]['id'].'\'  and trainingDate = \''.$_POST['trainingDate'].'\'');
+        if(count($countTrainingTime)>=$maxTrainingRoom[0]['maxNumberOfPeople']){
+           header('Location: index.php?c=pages&a=chooseTimeAndRoom&typeOfTraining='.$_POST['typeOfTraining'].'&trainingDate='.$_POST['trainingDate'].'&f=kein Trainingsplatz verfügbar');
+        }
+
         $this->_params['trainingDate'] = $_POST['trainingDate'];
         $this->_params['typeOfTraining'] = $_POST['typeOfTraining'];
 
 
+       // var_dump( $maxTrainingRoom);
+      //  var_dump($countTrainingTime);
+
+         // var_dump( count($countTrainingTime));
+        //var_dump($maxTrainingRoom[0]['maxNumberOfPeople']);
     }
 
 

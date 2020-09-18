@@ -4,13 +4,13 @@
     <form method="post" action="<?= $_SERVER['PHP_SELF'] . '?a=register'; ?>" >
       <div class="form-group">
         <label for="email">Vorname:</label>
-        <input type="text" class="form-control" id="registerFirstName" placeholder="Vorname" name="firstName" 
+        <input type="text" class="form-control" id="registerFirstName" placeholder="Vorname" name="firstName" required 
         value="<?= isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : '' ?>">
 
       </div>
       <div class="form-group">
         <label for="password">Nachname:</label>
-        <input type="text" class="form-control" id="registerLastname" placeholder="Nachname" name="lastName" 
+        <input type="text" class="form-control" id="registerLastname" placeholder="Nachname" name="lastName" required 
         value="<?= isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : '' ?>">
       </div>
 

@@ -10,10 +10,13 @@
 
 
 # Anforderungen
+##Zur Benutzung der Applikation wird eine Internetverbindung benötigt
 
-## Zur Benutzung unserer Applikation benötigen Sie folgende Anwendungen 
+## Zur Gewährleistung der Funktionalität muss Javascript im Browser des Benutzers aktiviert sein.
+
+## Zur Benutzung der Applikation werden folgende Anwendungen benötigt 
 	XAMPP Version: 7.1.32
-	Control Panel Version: 3.2.4  [ Compiled: Jun 5th 2019 ]
+	Control Panel Version: 3.2.4  
 	phpmyadmin
 ## Dev-tools
 	PHP Version 7.3.10/7.1.32

@@ -43,12 +43,12 @@ CREATE TABLE IF NOT EXISTS `trainingskalender`.`TrainingEntry` (
   `trainingDate` DATE NOT NULL,
   `typeOfTraining` ENUM('Kurs', 'Training') NOT NULL,
   `changingRoom` VARCHAR(45) NOT NULL,
-  `changingRoomBeforeStartTime` VARCHAR(45) NOT NULL,
+  `changingRoomBeforeStartTime` TIME NOT NULL,
   `changingRoomBeforeEndTime` TIME NOT NULL,
   `changingRoomAfterStartTime` TIME NOT NULL,
   `changingRoomAfterEndTime` TIME NOT NULL,
   `cardioStartTime` TIME NOT NULL,
-  `cardioEndTime` VARCHAR(45) NOT NULL,
+  `cardioEndTime` TIME NOT NULL,
   `memberId` INT NOT NULL,
   `areaTimeslotId` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -117,29 +117,6 @@ CREATE TABLE IF NOT EXISTS `trainingskalender`.`AreaTimeslot` (
   CONSTRAINT `courseId`
     FOREIGN KEY (`courseId`)
     REFERENCES `trainingskalender`.`Course` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-
-
--- -----------------------------------------------------
--- Table `trainingskalender`.`TrainingTimeslot`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trainingskalender`.`TrainingTimeslot` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `areaTimeslotId` INT NOT NULL,
-  `trainingEntryId` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `areaTimeslotId`
-    FOREIGN KEY (`areaTimeslotId`)
-    REFERENCES `trainingskalender`.`AreaTimeslot` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `trainingEntryId`
-    FOREIGN KEY (`trainingEntryId`)
-    REFERENCES `trainingskalender`.`TrainingEntry` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
